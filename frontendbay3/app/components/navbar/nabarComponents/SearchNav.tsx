@@ -48,14 +48,13 @@ const SearchNav = () => {
               <li className="text-center">Loading...</li>
             ) : (
               filteredTitles.map((item: any, index: number) => (
-                <li key={index} className="!py-2 hover:bg-gray-100 px-2">
-                  <Link
-                    className="hover:text-[var(--primary-color)] capitalize"
-                    href={`/product/${item}`}
-                  >
-                    {item}
-                  </Link>
-                </li>
+                <Link
+                  key={index}
+                  className="hover:text-[var(--primary-color)] capitalize"
+                  href={`/product/${item}`}
+                >
+                  <li className="!py-2 hover:bg-gray-100 px-2">{item}</li>
+                </Link>
               ))
             )}
           </ul>
