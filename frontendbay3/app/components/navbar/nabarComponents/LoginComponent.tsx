@@ -22,7 +22,7 @@ const LoginComponent = () => {
       >
         {t("navbar.login")}
       </button>
-      <div className="absolute top-[350%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 shadow-2xl">
+      <div className="absolute z-30 backdrop-opacity-100 top-[350%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 shadow-2xl">
         {isOpen && <Login />}
         {isOpen && (
           <IoMdCloseCircleOutline

@@ -1,6 +1,6 @@
 "use client";
 import { useTranslations } from "next-intl";
-import React, { useEffect } from "react";
+import React from "react";
 import CategoriesList from "./CategoriesList";
 import { IoIosArrowDown } from "react-icons/io";
 

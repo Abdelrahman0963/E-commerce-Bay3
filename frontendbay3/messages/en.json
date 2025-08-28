@@ -10,5 +10,20 @@
   "homepage": {
     "header": "All Products",
     "price": "EGP"
+  },
+  "login": {
+    "email": "Email",
+    "password": "Password",
+    "login": "Login",
+    "signup": "Sign Up",
+    "forgot": "Forgot the password?"
+  },
+  "signup": {
+    "username": "Username",
+    "email": "Email",
+    "password": "Password",
+    "confirmPassword": "Confirm Password",
+    "phone": "Phone",
+    "signup": "Register"
   }
 }

@@ -16,8 +16,14 @@ export const UseLogin = () => {
 // Register Hook
 export const UseRegister = () => {
   return useMutation({
-    mutationFn: ({ email, password }: { email: string; password: string }) =>
-      register(email, password),
+    mutationFn: ({ username, email, password, confirmPassword, phone }: {
+      username: string;
+      email: string;
+      password: string;
+      confirmPassword: string;
+      phone: string
+    }) =>
+      register(username, email, password, confirmPassword, phone),
     onError: (error: any) => {
       console.error("❌ Register failed:", error);
     },
