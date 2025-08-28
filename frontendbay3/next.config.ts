@@ -4,7 +4,7 @@ import createNextIntlPlugin from "next-intl/plugin";
 const nextConfig: NextConfig = {
   reactStrictMode: true,
   images: {
-    format: ["logo/png"],
+    formats: ["image/avif", "image/webp"],
     domains: ["localhost"],
   },
 };
