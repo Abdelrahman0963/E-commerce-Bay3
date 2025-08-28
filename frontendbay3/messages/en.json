@@ -24,6 +24,6 @@
     "password": "Password",
     "confirmPassword": "Confirm Password",
     "phone": "Phone",
-    "signup": "Register"
+    "submit": "Sign Up"
   }
 }
