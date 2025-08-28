@@ -8,6 +8,7 @@ import SearchNav from "./SearchNav";
 import { MdOutlineLanguage } from "react-icons/md";
 import { useEffect, useState } from "react";
 import { RiMenu4Fill } from "react-icons/ri";
+import LoginComponent from "./LoginComponent";
 
 const NavbarCom = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -58,15 +59,7 @@ const NavbarCom = () => {
           </button>
 
           <Categories />
-
-          <Link
-            href={"/log-in"}
-            className="cursor-pointer border-b-2 border-b-[var(--primary-color)]  h-10"
-          >
-            <button className="whitespace-nowrap h-full cursor-pointer items-center justify-center bg-white rounded-lg !px-4 text-black text-[1rem]">
-              {t("navbar.login")}
-            </button>
-          </Link>
+          <LoginComponent />
 
           <PostAd />
         </div>

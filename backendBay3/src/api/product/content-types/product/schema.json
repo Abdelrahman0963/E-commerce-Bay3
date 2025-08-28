@@ -33,7 +33,7 @@
       },
       "required": true
     },
-    "newprice": {
+    "price": {
       "type": "decimal",
       "pluginOptions": {
         "i18n": {
@@ -42,20 +42,11 @@
       },
       "required": true
     },
-    "oldprice": {
-      "type": "decimal",
-      "pluginOptions": {
-        "i18n": {
-          "localized": true
-        }
-      },
-      "required": false
-    },
     "images": {
       "type": "media",
       "pluginOptions": {
         "i18n": {
-          "localized": true
+          "localized": false
         }
       },
       "multiple": true,
@@ -64,15 +55,6 @@
         "images"
       ]
     },
-    "stock": {
-      "type": "integer",
-      "pluginOptions": {
-        "i18n": {
-          "localized": true
-        }
-      },
-      "required": true
-    },
     "company": {
       "type": "string",
       "pluginOptions": {
@@ -80,7 +62,7 @@
           "localized": true
         }
       },
-      "required": true
+      "required": false
     },
     "category": {
       "type": "string",
@@ -91,14 +73,6 @@
       },
       "required": true
     },
-    "UserRank": {
-      "type": "string",
-      "pluginOptions": {
-        "i18n": {
-          "localized": true
-        }
-      }
-    },
     "location": {
       "type": "string",
       "pluginOptions": {
@@ -106,6 +80,34 @@
           "localized": true
         }
       }
+    },
+    "seller": {
+      "type": "json",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
+    },
+    "statu": {
+      "type": "string",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      },
+      "required": false,
+      "unique": true
+    },
+    "slug": {
+      "type": "uid",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      },
+      "targetField": "title",
+      "required": true
     }
   }
 }

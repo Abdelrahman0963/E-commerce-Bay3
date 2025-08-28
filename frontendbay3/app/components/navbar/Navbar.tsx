@@ -4,7 +4,7 @@ import NavbarCom from "./nabarComponents/NavbarCom";
 import Link from "next/link";
 const Navbar = () => {
   return (
-    <header className=" bg-white relative shadow-md !px-5 !py-5">
+    <header className=" bg-white relative shadow-md !px-20 !py-5">
       <nav className="flex items-center justify-between max-w-full mx-auto">
         <Link href="/" className="logo md:block w-full md:w-auto">
           <div className="logo md:block w-full md:w-auto">

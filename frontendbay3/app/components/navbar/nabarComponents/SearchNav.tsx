@@ -7,7 +7,7 @@ import Link from "next/link";
 
 const SearchNav = () => {
   const [dirction, setDirction] = useState<string>("ltr");
-  const { data, isLoading } = useProducts();
+  const { products: data, isLoading } = useProducts();
   const [search, setSearch] = useState("");
 
   const products = data?.data || [];

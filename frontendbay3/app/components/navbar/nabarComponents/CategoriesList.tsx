@@ -5,7 +5,7 @@ import Link from "next/link";
 import Loading from "../../Loading";
 import { useTranslations } from "next-intl";
 const CategoriesList = () => {
-  const { data, isLoading } = useProducts();
+  const { products: data, isLoading } = useProducts();
   const t = useTranslations();
   if (isLoading) return <Loading />;
 

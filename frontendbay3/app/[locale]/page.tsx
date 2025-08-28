@@ -1,10 +1,10 @@
 import Link from "next/link";
 import React from "react";
+import Homepage from "../pages/Homepage";
 const App = () => {
   return (
     <div>
-      <h1>Welcome to the App</h1>
-      <Link href="/about">About</Link>
+      <Homepage />
     </div>
   );
 };

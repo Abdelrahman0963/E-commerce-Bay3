@@ -1,13 +1,16 @@
 export const CATEGORIES_API_URL_EN =
-  "http://localhost:1337/api/products?locale=en";
+  "http://localhost:1337/api/products?populate=*&locale=en";
 export const CATEGORIES_API_URL_AR =
-  "http://localhost:1337/api/products?locale=ar";
-export async function fetchProducts() {
-  if (document.documentElement.lang === "ar") {
-    const resAr = await fetch(CATEGORIES_API_URL_AR);
-    return resAr.json();
-  } else {
-    const resEn = await fetch(CATEGORIES_API_URL_EN);
-    return resEn.json();
-  }
+  "http://localhost:1337/api/products?populate=*&locale=ar";
+
+export async function fetchProducts(slug?: string) {
+  const baseUrl =
+    document.documentElement.lang === "ar"
+      ? CATEGORIES_API_URL_AR
+      : CATEGORIES_API_URL_EN;
+
+  const url = slug ? `${baseUrl}&filters[slug][$eq]=${slug}` : baseUrl;
+
+  const res = await fetch(url);
+  return res.json();
 }

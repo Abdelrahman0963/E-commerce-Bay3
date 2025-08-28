@@ -6,5 +6,9 @@
     "Cathover": "All Products",
     "login": "Login",
     "signup": "Sign Up"
+  },
+  "homepage": {
+    "header": "All Products",
+    "price": "EGP"
   }
 }
