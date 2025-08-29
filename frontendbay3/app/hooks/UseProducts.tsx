@@ -1,7 +1,8 @@
 "use client";
+
 import { useQuery } from "@tanstack/react-query";
 import { fetchProducts } from "../services/ProductsApi";
-
+import useSWR from "swr";
 export const useProducts = (slug?: string) => {
   const { data, isLoading, isError, error } = useQuery({
     queryKey: ["products", slug],
@@ -10,3 +11,16 @@ export const useProducts = (slug?: string) => {
 
   return { products: data, isLoading, isError, error };
 };
+
+export function useProductBySlug(slug: string) {
+  const { data, error, isLoading } = useSWR(
+    slug ? `product-${slug}` : null,
+    () => fetchProducts(slug)
+  );
+
+  return {
+    product: data?.data?.[0],
+    isLoading,
+    isError: !!error,
+  };
+}

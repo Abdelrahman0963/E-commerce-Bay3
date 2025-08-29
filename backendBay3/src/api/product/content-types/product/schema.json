@@ -106,8 +106,7 @@
           "localized": true
         }
       },
-      "targetField": "title",
-      "required": true
+      "targetField": "title"
     }
   }
 }

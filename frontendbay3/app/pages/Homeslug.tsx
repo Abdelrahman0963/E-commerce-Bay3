@@ -1,37 +1,22 @@
 "use client";
 import React from "react";
-import { useProducts } from "../hooks/UseProducts";
+import { useProductBySlug } from "../hooks/UseProducts";
 
-interface Product {
-  attributes: {
-    slug: string;
-    title: string;
-    description: string;
-  };
-}
-
-interface HomeslugProps {
-  slug: string;
-}
-
-export default function Homeslug({ slug }: HomeslugProps) {
-  const decodedSlug = decodeURIComponent(slug);
-  const { products, isLoading, isError } = useProducts(decodedSlug);
+export default function Homeslug({ slug }: { slug: string }) {
+  const { product, isLoading, isError } = useProductBySlug(slug);
 
   if (isLoading) return <div>Loading...</div>;
-  if (isError || !products?.data || products.data.length === 0)
-    return <div>Product not found</div>;
+  if (isError || !product) return <div>Product not found</div>;
 
-  const product = products.data.find(
-    (p: Product) => p.attributes.slug === decodedSlug
-  )?.attributes;
-
-  if (!product) return <div>Product not found</div>;
+  const { title, description, price, company, location } = product;
 
   return (
     <div>
-      <h1>{product.title}</h1>
-      <p>{product.description}</p>
+      <h1>{title}</h1>
+      <p>{description}</p>
+      <p>Company: {company}</p>
+      <p>Location: {location}</p>
+      <p>Price: {price} EGP</p>
     </div>
   );
 }

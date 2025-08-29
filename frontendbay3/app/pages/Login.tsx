@@ -60,7 +60,7 @@ const Login = () => {
             type="text"
             placeholder="example@ex.com"
             {...register("email", {
-              required: t("login.email_required"),
+              required: t("login.email"),
               pattern: {
                 value: /^\S+@\S+$/i,
                 message: t("login.email_invalid"),
@@ -108,7 +108,6 @@ const Login = () => {
         {/* Server error */}
         {serverError && <div className="text-red-500 text-sm">{serverError}</div>}
 
-        {/* Submit */}
         <button
           type="submit"
           className="bg-[var(--primary-color)] text-white cursor-pointer !py-2 !px-4 rounded-lg"

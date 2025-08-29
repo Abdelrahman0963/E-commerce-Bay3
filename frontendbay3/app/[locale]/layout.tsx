@@ -38,7 +38,7 @@ export default async function RootLayout({
   if (!hasLocale(routing.locales, locale)) {
     notFound();
   }
-
+  const massages = (await import(`../../messages/${locale}.json`)).default;
   return (
     <html lang={locale} dir={locale === "ar" ? "rtl" : "ltr"}>
       <body
@@ -47,7 +47,7 @@ export default async function RootLayout({
         }
       >
         <Providers>
-          <NextIntlClientProvider>
+          <NextIntlClientProvider messages={massages || {}}>
             <LayoutProvider>{children}</LayoutProvider>
           </NextIntlClientProvider>
         </Providers>

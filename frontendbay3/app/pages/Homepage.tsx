@@ -24,7 +24,7 @@ const Homepage = () => {
                 className="border border-gray-300 !p-4 rounded-md"
                 key={product.id}
               >
-                <Link href={`/product/${product.title}`}>
+                <Link href={`/product/${product.slug}`}>
                   <picture className=" w-full h-48 flex items-center justify-center  overflow-hidden relative mb-2">
                     <Image
                       src={

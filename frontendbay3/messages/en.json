@@ -16,7 +16,10 @@
     "password": "Password",
     "login": "Login",
     "signup": "Sign Up",
-    "forgot": "Forgot the password?"
+    "forgot": "Forgot the password?",
+    "email_invalid": "the email is invalid",
+    "password_required": "the password is required",
+    "password_min": "the password must be at least 8 characters long"
   },
   "signup": {
     "username": "Username",

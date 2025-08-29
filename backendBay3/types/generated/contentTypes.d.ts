@@ -482,7 +482,6 @@ export interface ApiProductProduct extends Struct.CollectionTypeSchema {
         };
       }>;
     slug: Schema.Attribute.UID<'title'> &
-      Schema.Attribute.Required &
       Schema.Attribute.SetPluginOptions<{
         i18n: {
           localized: true;
