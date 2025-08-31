@@ -19,14 +19,26 @@
     "forgot": "Forgot the password?",
     "email_invalid": "the email is invalid",
     "password_required": "the password is required",
-    "password_min": "the password must be at least 8 characters long"
-  },
+    "password_min": "the password must be at least 8 characters long",
+    "welcome": "Welcome back to"
+    },
   "signup": {
     "username": "Username",
     "email": "Email",
     "password": "Password",
     "confirmPassword": "Confirm Password",
-    "phone": "Phone",
-    "submit": "Sign Up"
-  }
+    "submit": "Sign Up",
+     "welcome2": "We are happy to see you in",
+    "welcome3": "Here you can buy and sell everything you need.",
+    "required": "Username is required",
+    "min": "Username must be at least 4 characters",
+    "include": "Username must include at least one number",
+    "already-exists": "This username already exists",
+    "Email-required": "Email is required",
+    "Email-invalid": "Invalid email format",
+    "Password-required": "Password is required",
+    "Password-min": "Password must be at least 8 characters long",
+    "ConfirmPassword-required": "Confirm Password is required",
+    "ConfirmPassword-match": "Confirm Password must match Password"    
+    }
 }

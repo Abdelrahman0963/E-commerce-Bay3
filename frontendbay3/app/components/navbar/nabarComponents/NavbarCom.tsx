@@ -3,12 +3,11 @@ import { useLocale, useTranslations } from "next-intl";
 import { usePathname, useRouter } from "next/navigation";
 import Categories from "./Categories";
 import PostAd from "./PostAd";
-import Link from "next/link";
 import SearchNav from "./SearchNav";
 import { MdOutlineLanguage } from "react-icons/md";
 import { useEffect, useState } from "react";
 import { RiMenu4Fill } from "react-icons/ri";
-import LoginComponent from "./LoginComponent";
+import Link from "next/link";
 
 const NavbarCom = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -42,12 +41,9 @@ const NavbarCom = () => {
     <>
       {(isMobile && isOpen) || !isMobile ? (
         <div
-          className={`navbar-components bg-white md:w-[86%] w-[300px] md:!p-0 !p-4 h-auto flex md:flex-row flex-col items-center justify-start absolute md:static top-20  md:bg-transparent md:gap-8 gap-4 rounded-lg z-50 ${
-            dirction === "ltr" ? "md:right-0 right-1" : "md:left-0 left-1"
-          }`}
+          className={`navbar-components bg-white md:!p-0 !p-4 h-auto flex  gap-4 md:flex-row flex-col items-center justify-end ${isMobile ? "w-full !px-4  absolute top-16 right-2 z-50" : ""} `}
         >
           <SearchNav />
-
           <button
             onClick={handleLanguageChange}
             className="items-center justify-center bg-white text-black py-2 px-4 rounded-lg"
@@ -59,8 +55,9 @@ const NavbarCom = () => {
           </button>
 
           <Categories />
-          <LoginComponent />
-
+          <Link className="border-b-2 !px-3 hover:text-[var(--primary-color)]" href={"/login"}>
+            <span>{t("navbar.login")}</span>
+          </Link>
           <PostAd />
         </div>
       ) : null}

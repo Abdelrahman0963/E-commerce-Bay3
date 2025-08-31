@@ -1,11 +1,10 @@
-// lib/fetchProducts.ts
 export async function fetchProducts(slug?: string) {
-  const lang = document.documentElement.lang || "en";
-
-  const baseUrl = `http://localhost:1337/api/products?populate=*&locale=${lang}`;
+  const baseUrl = `http://localhost:1337/api/products`;
   const url = slug
-    ? `${baseUrl}&filters[slug][$eq]=${encodeURIComponent(slug)}`
-    : baseUrl;
+    ? `${baseUrl}?filters[slug][$eq]=${encodeURIComponent(slug)}&populate=*`
+    : `${baseUrl}?populate=*`;
+
+  console.log("Fetching from:", url);
 
   const res = await fetch(url);
   if (!res.ok) {

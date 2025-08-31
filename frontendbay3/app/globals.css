@@ -1,6 +1,8 @@
 @import "tailwindcss";
 @import "tw-animate-css";
+@import 'flowbite';
 
 :root {
   --primary-color: #db4444;
+  --secondary-color: #4687e8;
 }

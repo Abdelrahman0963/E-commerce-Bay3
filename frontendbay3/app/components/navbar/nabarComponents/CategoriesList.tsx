@@ -16,7 +16,7 @@ const CategoriesList = () => {
   const uniqueCategories = Array.from(new Set(categories));
 
   return (
-    <div className="CategoriesList md:absolute top-16 left-0 w-full bg-white md:shadow-lg !p-4 rounded-lg z-50 ">
+    <div className="CategoriesList md:absolute top-16 left-0 w-auto bg-white md:shadow-lg !p-4 rounded-lg z-50 ">
       <ul>
         <h3>{t("navbar.Cathover")}</h3>
         {uniqueCategories.map((category: any, index) => (

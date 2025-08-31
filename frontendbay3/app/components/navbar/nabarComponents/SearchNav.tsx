@@ -25,8 +25,8 @@ const SearchNav = () => {
   const t = useTranslations();
 
   return (
-    <div className="SearchNav  relative  w-64 md:w-3xl  h-10">
-      <search className="h-10 items-center justify-between rounded-lg relative">
+    <div className="SearchNav flex items-center justify-center  w-96 md:w-3xl  h-10">
+      <search className="h-10 w-96 items-center  justify-between rounded-lg relative">
         <input
           onChange={(e) => setSearch(e.target.value)} // تحديث حالة البحث
           type="text"
@@ -35,9 +35,8 @@ const SearchNav = () => {
         />
         <div className="searchicon flex items-center justify-center h-full">
           <MdOutlineSearch
-            className={`text-2xl text-[var(--primary-color)] absolute top-2 ${
-              dirction === "ltr" ? "right-2" : "left-2"
-            }`}
+            className={`text-2xl text-[var(--primary-color)] absolute top-2 ${dirction === "ltr" ? "right-2" : "left-2"
+              }`}
           />
         </div>
       </search>
@@ -51,7 +50,7 @@ const SearchNav = () => {
                 <Link
                   key={index}
                   className="hover:text-[var(--primary-color)] capitalize"
-                  href={`/product/${item}`}
+                  href={`/product/${item.slug}`}
                 >
                   <li className="!py-2 hover:bg-gray-100 px-2">{item}</li>
                 </Link>

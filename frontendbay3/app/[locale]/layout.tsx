@@ -6,6 +6,8 @@ import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { routing } from "@/i18n/routing";
 import { notFound } from "next/navigation";
 import { Providers } from "../queryProviders/Providers";
+import { Toaster } from "react-hot-toast"
+
 const cairo = Cairo({
   subsets: ["arabic"],
   weight: ["400", "700"],
@@ -43,12 +45,14 @@ export default async function RootLayout({
     <html lang={locale} dir={locale === "ar" ? "rtl" : "ltr"}>
       <body
         className={
-          !locale.startsWith("ar") ? poppins.className : cairo.className
+
+          `h-[100vh] ${!locale.startsWith("ar") ? poppins.className : cairo.className}`
         }
       >
         <Providers>
           <NextIntlClientProvider messages={massages || {}}>
             <LayoutProvider>{children}</LayoutProvider>
+            <Toaster position="top-center" toastOptions={{ duration: 3000 }} />
           </NextIntlClientProvider>
         </Providers>
       </body>
