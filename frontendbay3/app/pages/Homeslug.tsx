@@ -13,9 +13,10 @@ export default function Homeslug({ slug }: { slug: string }) {
   const { title, description, price, company, location, images } = product;
 
   return (
-    <section className="  !py-10 flex items-center justify-center gap-4">
+    <section className="!py-10 flex items-center justify-center gap-4">
       <div className="image">
         <Image
+
           src={
             product.images?.[0]?.url
               ? `http://localhost:1337${product.images?.[0]?.url}`

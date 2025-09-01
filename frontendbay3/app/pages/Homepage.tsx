@@ -21,6 +21,13 @@ const Homepage = () => {
           ) : (
             data?.data.map((product: any) => (
               <div
+                onMouseMove={(e) => {
+                  const target = e.currentTarget;
+                  const x = e.clientX - target.offsetLeft;
+                  const y = e.clientY - target.offsetTop;
+                  target.style.setProperty("--x", `${x}px`);
+                  target.style.setProperty("--y", `${y}px`);
+                }}
                 className="border border-gray-300 !p-4 rounded-md"
                 key={product.id}
               >

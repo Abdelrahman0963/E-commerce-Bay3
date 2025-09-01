@@ -1,32 +1,51 @@
 "use client";
 import { useMutation } from "@tanstack/react-query";
-import { login, register } from "../services/AuthService";
+import { login, register } from "../services/AuthService"; // ✅ هنا صح
 import toast from "react-hot-toast";
+import { useAuthStore } from "../store/useAuthStore";
+import { useRouter } from "next/navigation";
 
-// Login Hook
 export const UseLogin = () => {
+  const router = useRouter();
+  const loginToStore = useAuthStore((s) => s.login);
+
   return useMutation({
     mutationFn: ({ email, password }: { email: string; password: string }) =>
       login(email, password),
-    onSuccess: () => {
+    onSuccess: (data) => {
+      console.log("LOGIN SUCCESS DATA:", data);
+      const user = data.user;
+      const jwt = data.jwt;
+
+      if (!user || !jwt) {
+        toast.error("Invalid login response");
+        return;
+      }
+
+      loginToStore({
+        id: user.id,
+        username: user.username,
+        email: user.email,
+        token: jwt,
+      });
+
       toast.success("✅ Login successful!");
-      // هنا ممكن تعمل redirect بعد النجاح
-      window.location.href = "/";
+      router.push("/");
     },
     onError: (error: any) => {
+      console.error("Login failed:", error);
       const message =
         error?.response?.data?.message ||
         error?.response?.data ||
         "❌ البريد الإلكتروني أو كلمة المرور غير صحيحة";
-
-      console.error("❌ Login failed:", message);
-      toast.error(message); // 👈 بدل alert
+      toast.error(String(message));
     },
   });
 };
 
-// Register Hook
 export const UseRegister = () => {
+  const router = useRouter();
+
   return useMutation({
     mutationFn: ({ username, email, password }: {
       username: string;
@@ -36,7 +55,7 @@ export const UseRegister = () => {
       register(username, email, password),
     onSuccess: () => {
       toast.success("🎉 Account created successfully!");
-      window.location.href = "/login";
+      router.push("/login");
     },
     onError: (error: any) => {
       console.error("❌ Register failed:", error?.response?.data || error.message);
