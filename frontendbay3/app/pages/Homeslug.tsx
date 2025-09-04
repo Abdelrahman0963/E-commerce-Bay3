@@ -1,37 +1,26 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import { useProductBySlug } from "../hooks/UseProducts";
-import Image from "next/image";
-import 'flowbite';
+import Carousel from "../components/Carousel";
+import Notfound from "../components/Notfound";
+import { ProductSkeleton } from "../components/Loading";
 
 export default function Homeslug({ slug }: { slug: string }) {
   const { product, isLoading, isError } = useProductBySlug(slug);
 
-  if (isLoading) return <div>Loading...</div>;
-  if (isError || !product) return <div>Product not found</div>;
+
+  if (isLoading) return <ProductSkeleton />;
+  if (isError || !product) return <Notfound />;
 
   const { title, description, price, company, location, images } = product;
 
   return (
-    <section className="!py-10 flex items-center justify-center gap-4">
-      <div className="image">
-        <Image
-
-          src={
-            product.images?.[0]?.url
-              ? `http://localhost:1337${product.images?.[0]?.url}`
-              : "/fallback.png"
-          }
-          alt={product.title}
-          width={400}
-          height={400}
-          loading="lazy"
-        />
-      </div>
-      <div className="info">
-        <h1>{title}</h1>
-        <p>{description}</p>
-        <p>{price}</p>
+    <section className="container !mx-auto !py-26 md:!py-30 md:!px-6 !px-4 flex flex-col md:flex-row gap-4 items-center">
+      <Carousel images={images} />
+      <div className="info max-w-md">
+        <h1 className="text-2xl font-bold">{title}</h1>
+        <p className="text-gray-600">{description}</p>
+        <p className="mt-2 font-semibold">{price}</p>
         <p>{company}</p>
         <p>{location}</p>
       </div>

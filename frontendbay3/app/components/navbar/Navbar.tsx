@@ -4,22 +4,20 @@ import NavbarCom from "./nabarComponents/NavbarCom";
 import Link from "next/link";
 const Navbar = () => {
   return (
-    <header className=" bg-white relative  shadow-md !px-20 !py-5">
-      <nav className="flex items-center justify-between gap-6 w-full !mx-auto">
-        <div className="logo">
-          <Link href="/" className="logo md:block w-full md:w-auto">
-            <div className="logo md:block w-full md:w-auto">
-              <Image
-                src="/logo.png"
-                alt="logo"
-                priority
-                quality={100}
-                width={150}
-                height={150}
-              />
-            </div>
-          </Link>
-        </div>
+    <header className=" bg-white fixed top-0 left-0 right-0 z-50 shadow-md !px-6 md:!px-20 !py-5">
+      <nav className="flex items-center relative justify-between w-full">
+        <Link href="/" className="logo md:block w-full lg:w-auto">
+          <div>
+            <Image
+              src="/logo.png"
+              alt="logo"
+              priority
+              quality={100}
+              width={150}
+              height={150}
+            />
+          </div>
+        </Link>
         <NavbarCom />
       </nav>
     </header>

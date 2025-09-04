@@ -66,9 +66,6 @@
       "inversedBy": "users",
       "configurable": false
     },
-    "Phone": {
-      "type": "string"
-    },
     "UserRank": {
       "type": "string"
     }

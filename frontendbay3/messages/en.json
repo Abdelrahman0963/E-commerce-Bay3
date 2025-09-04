@@ -20,7 +20,8 @@
     "email_invalid": "the email is invalid",
     "password_required": "the password is required",
     "password_min": "the password must be at least 8 characters long",
-    "welcome": "Welcome back to"
+    "welcome": "Welcome back to",
+    "hiUser": "Hello,"
     },
   "signup": {
     "username": "Username",
@@ -40,5 +41,28 @@
     "Password-min": "Password must be at least 8 characters long",
     "ConfirmPassword-required": "Confirm Password is required",
     "ConfirmPassword-match": "Confirm Password must match Password"    
+    },
+    "adsform":{
+      "title": "Post Your Ad",
+      "ProductName": "Product Name",
+      "required": "Required",
+      "min": "At least 4 characters",
+      "max": "At most 20 characters",
+      "description": "Description",
+      "descmin": "At least 20 characters",
+      "descmax": "At most 1000 characters",
+      "category": "Category",
+      "category1":"Select Category",
+      "category2":"phones",
+      "category3":"Tablets",
+      "category4":"Laptops",
+      "category5":"Accessories",
+      "catrequired": "Category is required",
+      "uploadimage": "Upload Image",
+      "imagelimit": "You can upload up to 5 images",
+      "price": "Price",
+      "location": "Location",
+      "phone": "Phone Number",
+      "submit": "Post Ad"
     }
 }

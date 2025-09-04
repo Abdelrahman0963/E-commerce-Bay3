@@ -19,7 +19,7 @@ const Categories = () => {
         </span>
       </button>
       {isOpen && (
-        <div onMouseLeave={() => setIsOpen(false)} className="navcategories">
+        <div onMouseLeave={() => setIsOpen(false)}>
           <CategoriesList />
         </div>
       )}

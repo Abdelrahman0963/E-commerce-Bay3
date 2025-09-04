@@ -24,3 +24,17 @@ export function useProductBySlug(slug: string) {
     isError: !!error,
   };
 }
+
+export function useCategoriesSlug(category?: string) {
+  const { data, error, isLoading } = useQuery({
+    queryKey: ["categories", category],
+    queryFn: () => fetchProducts(undefined, category), // ✅ slug = undefined, category = category
+    enabled: !!category,
+  });
+
+  return {
+    categories: data?.data || [],
+    isLoading,
+    isError: !!error,
+  };
+}

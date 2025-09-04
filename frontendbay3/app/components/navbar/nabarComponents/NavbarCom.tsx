@@ -33,7 +33,7 @@ const NavbarCom = () => {
     setDirction(document.documentElement.dir);
 
     const handleResize = () => {
-      setIsMobile(window.innerWidth < 768);
+      setIsMobile(window.innerWidth <= 1023);
     };
 
     handleResize();
@@ -45,7 +45,7 @@ const NavbarCom = () => {
     <>
       {(isMobile && isOpen) || !isMobile ? (
         <div
-          className={`navbar-components bg-white md:!p-0 !p-4 h-auto flex  gap-4 md:flex-row flex-col items-center justify-end ${isMobile ? "w-full !px-4  absolute top-16 right-2 z-50" : ""} `}
+          className={`navbar-components bg-white  h-auto flex  gap-4 md:flex-row flex-col items-center justify-end ${isMobile ? "w-full !px-4  absolute top-16 right-2 z-50" : ""} `}
         >
           <SearchNav />
           <button
@@ -72,7 +72,7 @@ const NavbarCom = () => {
       {isMobile && (
         <RiMenu4Fill
           onClick={() => setIsOpen(!isOpen)}
-          className="cursor-pointer text-3xl md:hidden flex"
+          className="cursor-pointer text-3xl lg:hidden block"
         />
       )}
     </>

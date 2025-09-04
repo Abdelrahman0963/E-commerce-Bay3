@@ -49,14 +49,14 @@ const Login = () => {
   };
 
   return (
-    <section className="container w-full h-full flex items-center justify-between !mx-auto !py-16 !px-10">
-      <div className="login-logo md:block hidden relative">
+    <section className="container w-full h-full flex items-center justify-center gap-12 md:justify-between  !mx-auto !py-26 md:!py-30 md:!px-0 !px-10">
+      <div className="login-logo lg:block hidden relative">
         <HiArrowTrendingDown size={50} className="absolute top-[2rem] right-[8rem] z-10" />
         <h3 className="text-2xl font-bold !mb-4">{t("login.welcome")}</h3>
         <Image src="/logo.png" alt="logo" loading="lazy" width={400} height={400} />
       </div>
-      <div className="form  !p-6 rounded-lg  border-2 border-gray-500 shadow-2xs">
-        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
+      <div className="form !p-6 rounded-lg  border-2 border-gray-500 shadow-2xs">
+        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4 w-fit md:w-96">
           {/* Email */}
           <div className="flex flex-col gap-2 ">
             <label htmlFor="email">{t("login.email")}</label>

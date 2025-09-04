@@ -16,9 +16,11 @@ const CategoriesList = () => {
   const uniqueCategories = Array.from(new Set(categories));
 
   return (
-    <div className="CategoriesList md:absolute top-16 left-0 w-auto bg-white md:shadow-lg !p-4 rounded-lg z-50 ">
+    <div className="CategoriesList lg:absolute top-16 left-0 w-auto bg-white lg:shadow-lg !p-4 rounded-lg z-50 ">
       <ul>
-        <h3>{t("navbar.Cathover")}</h3>
+        <Link href="/" className="hover:text-[var(--primary-color)]">
+          <h3>{t("navbar.Cathover")}</h3>
+        </Link>
         {uniqueCategories.map((category: any, index) => (
           <li key={index} className="!py-2">
             <Link

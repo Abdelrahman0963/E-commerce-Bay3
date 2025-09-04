@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Cairo, Poppins } from "next/font/google";
 import "../globals.css";
+import 'flowbite';
 import LayoutProvider from "../components/LayoutProvider";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { routing } from "@/i18n/routing";
@@ -44,14 +45,16 @@ export default async function RootLayout({
   return (
     <html lang={locale} dir={locale === "ar" ? "rtl" : "ltr"}>
       <body
-        className={
-
-          `h-[100vh] ${!locale.startsWith("ar") ? poppins.className : cairo.className}`
-        }
+        className={`flex flex-col min-h-screen ${!locale.startsWith("ar") ? poppins.className : cairo.className
+          }`}
       >
         <Providers>
           <NextIntlClientProvider messages={massages || {}}>
-            <LayoutProvider>{children}</LayoutProvider>
+            <LayoutProvider>
+              <main className="flex-grow">
+                {children}
+              </main>
+            </LayoutProvider>
             <Toaster position="top-center" toastOptions={{ duration: 3000 }} />
           </NextIntlClientProvider>
         </Providers>

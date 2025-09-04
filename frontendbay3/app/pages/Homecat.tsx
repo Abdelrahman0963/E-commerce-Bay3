@@ -1,0 +1,59 @@
+"use client";
+import React from "react";
+import { useCategoriesSlug } from "../hooks/UseProducts";
+import Notfound from "../components/Notfound";
+import SkeletonLoader from "../components/Loading";
+import Link from "next/link";
+import Image from "next/image";
+import { useTranslations } from "next-intl";
+import { GiCutDiamond } from "react-icons/gi";
+
+const Homecat = ({ category }: { category: string }) => {
+    const { categories, isLoading, isError } = useCategoriesSlug(category);
+    const t = useTranslations();
+
+    if (isLoading) return <SkeletonLoader />;
+    if (isError) return <Notfound />;
+    if (!categories || categories.length === 0) return <Notfound />;
+    console.log("🚀 Category sent to fetchProducts:", category);
+
+    return (
+        <section className="container !mx-auto !py-26 md:!py-30 md:!px-6 !px-4">
+            <h1 className="text-2xl font-medium !mb-6">{category}</h1>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                {categories.map((product: any) => (
+                    <div key={product.id} onMouseMove={(e) => {
+                        const target = e.currentTarget;
+                        const x = e.clientX - target.offsetLeft;
+                        const y = e.clientY - target.offsetTop;
+                        target.style.setProperty("--x", `${x}px`);
+                        target.style.setProperty("--y", `${y}px`);
+                    }} className="border border-gray-300 !p-4 rounded-md">
+                        <Link href={`/product/${product.slug}`}>
+                            <picture className=" w-full h-48 flex items-center justify-center  overflow-hidden relative mb-2">
+                                <Image
+                                    src={product.images?.[0]?.url
+                                        ? `http://localhost:1337${product.images?.[0]?.url}`
+                                        : "/fallback.png"}
+                                    alt={product.title}
+                                    loading="lazy"
+                                    width={200}
+                                    height={200}
+                                />
+                                <GiCutDiamond className="absolute text-3xl top-2 left-2 text-[var(--primary-color)]" />
+
+                            </picture>
+                            <p className="text-[var(--primary-color)] font-semibold  !mb-2">
+                                {product.price} {t("homepage.price")}
+                            </p>
+                            <h2 className="text-lg font-semibold">{product.title}</h2>
+                            <p className="text-gray-600">{product.description}</p>
+                        </Link>
+                    </div>
+                ))}
+            </div>
+        </section>
+    );
+};
+
+export default Homecat;

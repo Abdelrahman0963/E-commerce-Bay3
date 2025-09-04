@@ -5,13 +5,15 @@ import { useEffect } from "react";
 
 export const useRequireAuth = () => {
     const router = useRouter();
-    const { token } = useAuthStore();
+    const { token, hydrated } = useAuthStore();
 
     useEffect(() => {
+        if (!hydrated) return;
+
         if (!token) {
             router.push("/login");
         }
-    }, [token, router]);
+    }, [token, hydrated, router]);
 
-    return token;
+    return hydrated ? token : null;
 };

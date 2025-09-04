@@ -9,7 +9,7 @@ const SearchNav = () => {
   const [dirction, setDirction] = useState<string>("ltr");
   const { products: data, isLoading } = useProducts();
   const [search, setSearch] = useState("");
-
+  const searchRef = useRef<HTMLInputElement>(null);
   const products = data?.data || [];
   const title = products.map((p: any) => p.title).filter(Boolean);
   const uniqueTitle = Array.from(new Set(title));
@@ -17,25 +17,26 @@ const SearchNav = () => {
   const filteredTitles = uniqueTitle.filter((item: any) =>
     item.toLowerCase().includes(search.toLowerCase())
   );
+  const focasInput = () => searchRef.current?.focus();
 
   useEffect(() => {
     setDirction(document.documentElement.dir);
   }, []);
-
   const t = useTranslations();
 
   return (
     <div className="SearchNav flex items-center justify-center  w-96 md:w-3xl  h-10">
       <search className="h-10 w-96 items-center  justify-between rounded-lg relative">
         <input
+          ref={searchRef}
           onChange={(e) => setSearch(e.target.value)} // تحديث حالة البحث
           type="text"
           placeholder={t("navbar.searchbar")}
           className="h-full w-full bg-white rounded-lg px-2 text-black focus:outline-[var(--primary-color)]  border border-gray-300"
         />
         <div className="searchicon flex items-center justify-center h-full">
-          <MdOutlineSearch
-            className={`text-2xl text-[var(--primary-color)] absolute top-2 ${dirction === "ltr" ? "right-2" : "left-2"
+          <MdOutlineSearch onClick={focasInput}
+            className={`text-2xl text-[var(--primary-color)] cursor-pointer absolute top-2 ${dirction === "ltr" ? "right-2" : "left-2"
               }`}
           />
         </div>

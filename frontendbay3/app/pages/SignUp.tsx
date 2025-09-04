@@ -1,24 +1,23 @@
 "use client"
 import Image from 'next/image'
-import React, { useState } from 'react'
-import { useForm, Controller } from 'react-hook-form'
+import React from 'react'
+import { FieldValues, Form, SubmitHandler, useForm } from 'react-hook-form'
 import { UseRegister } from "../hooks/UseAuth";
 import { HiArrowTrendingDown } from 'react-icons/hi2'
 import { useTranslations } from 'next-intl'
-import PhoneInput from 'react-phone-number-input'
 import 'react-phone-number-input/style.css'
 
 const SignUp = () => {
-    const { register, handleSubmit, control, watch, formState: { errors } } = useForm();
+    const { register, handleSubmit, watch, formState: { errors } } = useForm();
     const { mutate: registerUser } = UseRegister();
     const t = useTranslations();
 
-    const onSubmit = (data: any) => {
+    const onSubmit: SubmitHandler<FieldValues> = (data: any) => {
         registerUser(data);
     };
 
     return (
-        <section className="container w-full h-full flex items-center justify-between !mx-auto !py-16 !px-10">
+        <section className="container w-full h-full flex items-center justify-center md:justify-between  !mx-auto !py-26 md:!py-30 md:!px-0 !px-10">
             <div className="login-logo md:block hidden relative">
                 <HiArrowTrendingDown size={50} className="absolute top-[2rem] left-[20rem] text-[var(--primary-color)] z-10" />
                 <h3 className="text-2xl font-bold !mb-4">{t("signup.welcome2")}</h3>

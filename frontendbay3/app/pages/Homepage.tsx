@@ -6,19 +6,21 @@ import Link from "next/link";
 import { useTranslations } from "next-intl";
 import { GiCutDiamond } from "react-icons/gi";
 import SkeletonLoader from "../components/Loading";
+import Notfound from "../components/Notfound";
 
 const Homepage = () => {
-  const { products: data, isLoading } = useProducts();
-
+  const { products: data, isLoading, isError } = useProducts();
   const t = useTranslations();
+  if (isLoading) return <SkeletonLoader />
+    ;
+  if (isError || !data) return <Notfound />;
+
   return (
-    <section className="container !mx-auto !py-10 ">
+    <section className="container !mx-auto !py-26 md:!py-30 md:!px-6 !px-4">
       <div>
-        <h1 className="text-2xl font-medium">{t("homepage.header")}</h1>
+        <h1 className="text-2xl font-medium !mb-6">{t("homepage.header")}</h1>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {isLoading ? (
-            <SkeletonLoader />
-          ) : (
+          {(
             data?.data.map((product: any) => (
               <div
                 onMouseMove={(e) => {
