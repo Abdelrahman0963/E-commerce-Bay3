@@ -16,7 +16,7 @@ const AuthNav = () => {
     return (
         <>
             <nav onClick={() => setIsOpen(!isOpen)} className="user-icon flex items-center gap-1 cursor-pointer relative">
-                <strong className='!py-2 !px-3 rounded-full bg-[var(--user-color)] text-[var(--primary-color)] border-2 border-gray-500 text-[1rem]'>{initials}</strong>
+                <strong className='rounded-full w-10 h-10 flex items-center justify-center bg-[var(--user-color)] text-[var(--primary-color)] border-2 border-gray-500 text-[1.3rem]'>{initials}</strong>
                 <IoIosArrowDown />
             </nav>
             {isOpen && (

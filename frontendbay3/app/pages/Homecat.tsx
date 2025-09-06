@@ -23,11 +23,6 @@ const Homecat = ({ category }: { category: string }) => {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {categories.map((product: any) => (
                     <div key={product.id} onMouseMove={(e) => {
-                        const target = e.currentTarget;
-                        const x = e.clientX - target.offsetLeft;
-                        const y = e.clientY - target.offsetTop;
-                        target.style.setProperty("--x", `${x}px`);
-                        target.style.setProperty("--y", `${y}px`);
                     }} className="border border-gray-300 !p-4 rounded-md">
                         <Link href={`/product/${product.slug}`}>
                             <picture className=" w-full h-48 flex items-center justify-center  overflow-hidden relative mb-2">

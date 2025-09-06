@@ -5,5 +5,8 @@
 :root {
   --primary-color: #db4444;
   --secondary-color: #4687e8;
+  --dashboard-color: #212134;
+  --dashboard2-color: #2f2f4a;
+  --dashboard3-color: #7B79FF;
   --user-color: #db444433;
 }

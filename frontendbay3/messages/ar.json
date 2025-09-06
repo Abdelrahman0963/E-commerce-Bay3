@@ -43,6 +43,7 @@
     "ConfirmPassword-match": "تاكيد كلمة المرور يجب ان يتطابق مع كلمة المرور"
   },
   "adsform":{
+      "success": "تم ارسال الاعلان للمراجعة",
       "title": "ضف اعلانك",
       "ProductName": "اسم المنتج",
       "required": "مطلوب",

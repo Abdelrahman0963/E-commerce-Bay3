@@ -7,7 +7,7 @@ import { useTranslations } from 'next-intl';
 
 const AuthDrop = () => {
     const logout = useAuthStore((state) => state.logout);
-    const username = useAuthStore((state) => state.username); // 👈 جيب الاسم مباشرة
+    const username = useAuthStore((state) => state.username);
     const router = useRouter();
     const t = useTranslations();
 
@@ -28,7 +28,7 @@ const AuthDrop = () => {
     return (
         <div className="flex flex-col items-center justify-center bg-white drop-shadow-xl rounded-lg !p-4 absolute top-20 z-50">
             <nav className="flex items-center justify-end gap-1 cursor-pointer !pb-5">
-                <strong className="!py-4 !px-6 rounded-full bg-[var(--user-color)] text-[var(--primary-color)] border-2 border-gray-500 text-[1.5rem]">
+                <strong className="w-14 h-14 flex items-center justify-center rounded-full bg-[var(--user-color)] text-[var(--primary-color)] border-2 border-gray-500 text-[1.8rem]">
                     {initials}
                 </strong>
 

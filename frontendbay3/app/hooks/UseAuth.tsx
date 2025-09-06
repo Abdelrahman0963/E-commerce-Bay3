@@ -1,6 +1,6 @@
 "use client";
 import { useMutation } from "@tanstack/react-query";
-import { login, register } from "../services/AuthService"; // ✅ هنا صح
+import { login, register } from "../services/AuthService";
 import toast from "react-hot-toast";
 import { useAuthStore } from "../store/useAuthStore";
 import { useRouter } from "next/navigation";
@@ -13,12 +13,11 @@ export const UseLogin = () => {
     mutationFn: ({ email, password }: { email: string; password: string }) =>
       login(email, password),
     onSuccess: (data) => {
-      console.log("LOGIN SUCCESS DATA:", data);
       const user = data.user;
       const jwt = data.jwt;
 
       if (!user || !jwt) {
-        toast.error("Invalid login response");
+        toast.error("بيانات تسجيل الدخول غير صالحة");
         return;
       }
 
@@ -26,14 +25,15 @@ export const UseLogin = () => {
         id: user.id,
         username: user.username,
         email: user.email,
+        UserRank: user.UserRank, // ← سترينج مباشر زي "admin"
         token: jwt,
       });
 
-      toast.success("✅ Login successful!");
+
+      toast.success("✅ تم تسجيل الدخول بنجاح");
       router.push("/");
     },
     onError: (error: any) => {
-      console.error("Login failed:", error);
       const message =
         error?.response?.data?.message ||
         error?.response?.data ||
@@ -47,22 +47,24 @@ export const UseRegister = () => {
   const router = useRouter();
 
   return useMutation({
-    mutationFn: ({ username, email, password }: {
+    mutationFn: ({
+      username,
+      email,
+      password,
+    }: {
       username: string;
       email: string;
       password: string;
-    }) =>
-      register(username, email, password),
+    }) => register(username, email, password),
     onSuccess: () => {
-      toast.success("🎉 Account created successfully!");
+      toast.success("🎉 تم إنشاء الحساب بنجاح");
       router.push("/login");
     },
     onError: (error: any) => {
-      console.error("❌ Register failed:", error?.response?.data || error.message);
-      toast.error(
+      const message =
         error?.response?.data?.message ||
-        "❌ فشل التسجيل. تأكد من البيانات وحاول مرة أخرى."
-      );
+        "❌ فشل التسجيل. تأكد من البيانات وحاول مرة أخرى.";
+      toast.error(String(message));
     },
   });
 };

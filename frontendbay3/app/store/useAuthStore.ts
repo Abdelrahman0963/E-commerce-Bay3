@@ -6,12 +6,13 @@ type AuthUser = {
   id: number;
   username: string;
   email: string;
+  UserRank: string;
   token?: string | null;
 };
 
 type AuthState = AuthUser & {
   isLoggedIn: boolean;
-  hydrated: boolean; // flag for rehydrate
+  hydrated: boolean;
 };
 
 type AuthActions = {
@@ -27,13 +28,13 @@ export const useAuthStore = create<AuthState & AuthActions>()(
       id: 0,
       username: "",
       email: "",
+      UserRank: "",
       token: null,
       isLoggedIn: false,
       hydrated: false,
 
       login: (data) =>
-        set((s) => ({
-          ...s,
+        set(() => ({
           ...data,
           isLoggedIn: true,
         })),
@@ -43,6 +44,7 @@ export const useAuthStore = create<AuthState & AuthActions>()(
           id: 0,
           username: "",
           email: "",
+          UserRank: "",
           token: null,
           isLoggedIn: false,
         })),
@@ -52,6 +54,7 @@ export const useAuthStore = create<AuthState & AuthActions>()(
           id: 0,
           username: "",
           email: "",
+          UserRank: "",
           token: null,
           isLoggedIn: false,
         })),
@@ -65,11 +68,11 @@ export const useAuthStore = create<AuthState & AuthActions>()(
         id: state.id,
         username: state.username,
         email: state.email,
+        UserRank: state.UserRank,
         token: state.token,
         isLoggedIn: state.isLoggedIn,
       }),
       onRehydrateStorage: () => (state) => {
-        // called when rehydrate finishes
         state?._setHydrated(true);
       },
     }

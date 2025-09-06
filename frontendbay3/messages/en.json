@@ -43,6 +43,7 @@
     "ConfirmPassword-match": "Confirm Password must match Password"    
     },
     "adsform":{
+      "success": "Your ad is under review",
       "title": "Post Your Ad",
       "ProductName": "Product Name",
       "required": "Required",
