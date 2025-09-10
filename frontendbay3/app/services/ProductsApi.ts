@@ -9,7 +9,6 @@ export async function fetchProducts(slug?: string, category?: string) {
 
   if (category) {
     filters.push(`filters[category][$eq]=${encodeURIComponent(category)}`);
-    console.log("kkkkkkkkk",encodeURIComponent(category))
   }
 
   const query =
@@ -17,7 +16,6 @@ export async function fetchProducts(slug?: string, category?: string) {
 
   const url = `${baseUrl}${query}`;
 
-  console.log("🚀 Fetching from:", url);
   const res = await fetch(url);
   if (!res.ok) {
     throw new Error(`HTTP error! status: ${res.status}`);

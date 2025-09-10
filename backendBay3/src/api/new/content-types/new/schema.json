@@ -1,0 +1,60 @@
+{
+  "kind": "collectionType",
+  "collectionName": "news",
+  "info": {
+    "singularName": "new",
+    "pluralName": "news",
+    "displayName": "newads"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": false
+    },
+    "description": {
+      "type": "text",
+      "required": false
+    },
+    "images": {
+      "type": "media",
+      "multiple": true,
+      "required": false,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "category": {
+      "type": "text",
+      "required": false
+    },
+    "price": {
+      "type": "decimal"
+    },
+    "location": {
+      "type": "text",
+      "required": false
+    },
+    "phone": {
+      "type": "string",
+      "required": false
+    },
+    "statu": {
+      "type": "string",
+      "default": "new",
+      "required": false
+    },
+    "email": {
+      "type": "email",
+      "required": false
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "title",
+      "required": false
+    }
+  }
+}
