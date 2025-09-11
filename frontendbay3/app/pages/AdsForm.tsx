@@ -33,7 +33,8 @@ const AdsForm = () => {
       category: data.category,
       location: data.location,
       phone: data.phone,
-      images: imageFiles,
+      images: data.images,
+      email: data.email
     };
 
     mutate(newAd);

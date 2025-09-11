@@ -1,5 +1,6 @@
-import { uploadImages } from "./mediaService";
+import { uploadImages } from "../services/mediaService";
 const newAdsUrl = "http://localhost:1337/api/news";
+
 
 export async function fetchNewAds(slug?: string) {
   let filters: string[] = [];
@@ -22,15 +23,14 @@ export async function fetchNewAds(slug?: string) {
 }
 
 export async function postNewAds(newAd: any) {
-  const imagesId = await uploadImages(newAd.images);
 
   const adPayload = {
     title: newAd.title,  
     description: newAd.description,
     location: newAd.location,
     phone: newAd.phone,
-    images: imagesId,
     price: newAd.price,
+    images: Array.isArray(newAd.images) ? await uploadImages(newAd.images) : [],
     category: newAd.category,
   };
 
