@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect } from "react";
+import React from "react";
 import { useProductBySlug } from "../hooks/UseProducts";
 import Carousel from "../components/Carousel";
 import Notfound from "../components/Notfound";

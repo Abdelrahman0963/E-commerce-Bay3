@@ -11,17 +11,26 @@ import { GiCutDiamond } from "react-icons/gi";
 const Homecat = ({ category }: { category: string }) => {
     const { categories, isLoading, isError } = useCategoriesSlug(category);
     const t = useTranslations();
-
+    type Product = {
+        id: string;
+        title: string;
+        description?: string;
+        price?: number;
+        category?: string;
+        location?: string;
+        phone?: string;
+        images?: { url: string }[];
+        slug: string;
+    }
     if (isLoading) return <SkeletonLoader />;
     if (isError) return <Notfound />;
     if (!categories || categories.length === 0) return <Notfound />;
-    console.log("🚀 Category sent to fetchProducts:", category);
 
     return (
         <section className="container !mx-auto !py-26 md:!py-30 md:!px-6 !px-4">
             <h1 className="text-2xl font-medium !mb-6">{category}</h1>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {categories.map((product: any) => (
+                {categories.map((product: Product) => (
                     <div key={product.id} onMouseMove={(e) => {
                     }} className="border border-gray-300 !p-4 rounded-md">
                         <Link href={`/product/${product.slug}`}>

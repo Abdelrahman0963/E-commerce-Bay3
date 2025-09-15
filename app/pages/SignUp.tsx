@@ -11,9 +11,8 @@ const SignUp = () => {
     const { register, handleSubmit, watch, formState: { errors } } = useForm();
     const { mutate: registerUser } = UseRegister();
     const t = useTranslations();
-
-    const onSubmit: SubmitHandler<FieldValues> = (data: any) => {
-        registerUser(data);
+    const onSubmit: SubmitHandler<FieldValues> = (data: FieldValues) => {
+        registerUser({ username: data.username, email: data.email, password: data.password });
     };
 
     return (

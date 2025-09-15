@@ -9,9 +9,13 @@ const CategoriesList = () => {
   const t = useTranslations();
   if (isLoading) return <Loading />;
 
-  const products = data?.data || [];
+  type Product = {
+    category: string | null;
+  };
 
-  const categories = products.map((p: any) => p.category).filter(Boolean); // نشيل null/falsy
+  const products: Product[] = data?.data || [];
+
+  const categories = products.map((p) => p.category).filter(Boolean) as string[];
 
   const uniqueCategories = Array.from(new Set(categories));
 
@@ -21,7 +25,7 @@ const CategoriesList = () => {
         <Link href="/" className="hover:text-[var(--primary-color)]">
           <h3>{t("navbar.Cathover")}</h3>
         </Link>
-        {uniqueCategories.map((category: any, index) => (
+        {uniqueCategories.map((category, index) => (
           <li key={index} className="!py-2">
             <Link
               className="hover:text-[var(--primary-color)] capitalize"

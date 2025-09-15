@@ -11,6 +11,17 @@ import Notfound from "../components/Notfound";
 const Homepage = () => {
   const { products: data, isLoading, isError } = useProducts();
   const t = useTranslations();
+  type Product = {
+    id: string;
+    title: string;
+    description?: string;
+    price?: number;
+    category?: string;
+    location?: string;
+    phone?: string;
+    images?: { url: string }[];
+    slug: string;
+  }
   if (isLoading) return <SkeletonLoader />
     ;
   if (isError || !data) return <Notfound />;
@@ -21,7 +32,7 @@ const Homepage = () => {
         <h1 className="text-2xl font-medium !mb-6">{t("homepage.header")}</h1>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {(
-            data?.data.map((product: any) => (
+            data?.data.map((product: Product) => (
               <div
                 className="border border-gray-300 !p-4 rounded-md"
                 key={product.id}

@@ -22,7 +22,15 @@ const Login = () => {
     email: string;
     password: string;
   };
-
+  type LoginError = {
+    response?: {
+      data?: {
+        error?: {
+          message?: string;
+        };
+      };
+    };
+  }
   const { mutate: login } = UseLogin();
   const {
     register,
@@ -38,7 +46,7 @@ const Login = () => {
         onSuccess: () => {
           console.log("Login successful");
         },
-        onError: (error: any) => {
+        onError: (error: LoginError) => {
           const message =
             error?.response?.data?.error?.message || "Invalid email or password";
           setServerError(message);
