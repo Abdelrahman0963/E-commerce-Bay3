@@ -18,7 +18,6 @@ const SearchNav = () => {
 
   const products: Product[] = data?.data || [];
 
-  // فلترة مباشرة على المنتجات
   const filteredProducts = products.filter(
     (p) =>
       p.title &&

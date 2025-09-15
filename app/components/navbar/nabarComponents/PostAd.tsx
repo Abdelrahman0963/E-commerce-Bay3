@@ -6,7 +6,7 @@ import { useAuthStore } from "@/app/store/useAuthStore";
 
 const PostAd = () => {
   const t = useTranslations();
-  const { token, hydrated } = useAuthStore(); // ✅ استخدم hook مرة واحدة في الأعلى
+  const { token, hydrated } = useAuthStore();
 
   if (!hydrated) return null;
 
