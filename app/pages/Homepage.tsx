@@ -38,7 +38,7 @@ const Homepage = () => {
                 key={product.id}
               >
                 <Link href={`/product/${product.slug}`}>
-                  <picture className=" w-full h-48 flex items-center justify-center  overflow-hidden relative mb-2">
+                  <div className=" w-full h-48 flex items-center justify-center  overflow-hidden relative mb-2">
                     <Image
                       src={
                         product.images?.[0]?.url
@@ -51,7 +51,7 @@ const Homepage = () => {
                       loading="lazy"
                     />
                     <GiCutDiamond className="absolute text-3xl top-2 left-2 text-[var(--primary-color)]" />
-                  </picture>
+                  </div>
                   <p className="text-[var(--primary-color)] font-semibold  !mb-2">
                     {product.price} {t("homepage.price")}
                   </p>
