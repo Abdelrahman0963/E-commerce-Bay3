@@ -1,0 +1,75 @@
+import { uploadImages } from "../services/mediaService";
+
+const newAdsUrl = "http://localhost:1337/api/news";
+
+export async function fetchNewAds(slug?: string) {
+  let filters: string[] = [];
+
+  if (slug) {
+    filters.push(`filters[slug][$eq]=${encodeURIComponent(slug)}`);
+  }
+
+  // لازم تعمل populate=user عشان يجيب بيانات اليوزر
+  const query =
+    filters.length > 0 ? `?${filters.join("&")}&populate=user` : `?populate=user`;
+
+  const url = `${newAdsUrl}${query}`;
+
+  const res = await fetch(url);
+  if (!res.ok) {
+    throw new Error(`HTTP error! status: ${res.status}`);
+  }
+
+  const json = await res.json();
+
+  const formattedData = json.data.map((item: any) => ({
+    id: item.id,
+    title: item.title,
+    description: item.description,
+    price: item.price,
+    category: item.category,
+    location: item.location,
+    phone: item.phone,
+    images: [], // لو فيه صور تقدر تضيفها هنا
+    status: item.statu,
+    user: item.user
+      ? {
+          id: item.user.id,
+          username: item.user.username,
+          email: item.user.email,
+        }
+      : null,
+    createdAt: item.createdAt,
+  }));
+
+  return formattedData;
+}
+
+export async function postNewAds(newAd: any) {
+  const adPayload = {
+    title: newAd.title,
+    description: newAd.description,
+    location: newAd.location,
+    phone: newAd.phone,
+    price: newAd.price,
+    images: Array.isArray(newAd.images) ? await uploadImages(newAd.images) : [],
+    category: newAd.category,
+  };
+
+  const res = await fetch(newAdsUrl, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ data: adPayload }),
+  });
+
+  const responseData = await res.json();
+
+  if (!res.ok) {
+    console.error("Error details:", responseData);
+    throw new Error(responseData?.error?.message || "Unknown error");
+  }
+
+  return responseData;
+}
