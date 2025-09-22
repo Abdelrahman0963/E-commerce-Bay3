@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import { useGetNewAds } from "@/app/hooks/UseNewAds";
 import { LiaEdit } from "react-icons/lia";
+import Link from "next/link";
 const Dashboard = () => {
     const { newads: ads, isLoading, isError } = useGetNewAds();
     const [activeTab, setActiveTab] = useState<"all" | "new" | "pending" | "rejected">("all");
@@ -21,6 +22,7 @@ const Dashboard = () => {
             username: string;
             email: string;
         };
+        slug: string;
         createdAt: string;
     };
 
@@ -36,6 +38,10 @@ const Dashboard = () => {
     if (isError) {
         return <div>Error loading ads.</div>;
     }
+    const header = document.querySelector('header');
+    const footer = document.querySelector('footer');
+    if (header) header.style.display = 'none';
+    if (footer) footer.style.display = 'none';
     return (
         <section className="min-h-screen w-full flex flex-col gap-4 items-center bg-[var(--dashboard-color)] !py-10 !px-4 md:!px-6">
             <div className="w-full bg-[var(--dashboard2-color)] !mt-14 rounded-2xl">
@@ -86,7 +92,9 @@ const Dashboard = () => {
                                         <td className="!px-6 !py-4">{new Date(ad.createdAt).toLocaleDateString()}</td>
                                         <td className="!px-6 !py-4">{ad.status}</td>
                                         <td className="!px-6 !py-4">
-                                            <LiaEdit className="text-2xl cursor-pointer text-[var(--dashboard3-color)]" />
+                                            <Link href={`/dashboard/${ad.slug}`} >
+                                                <LiaEdit className="text-2xl cursor-pointer text-[var(--dashboard3-color)]" />
+                                            </Link>
                                         </td>
                                     </tr>
                                 )) : (

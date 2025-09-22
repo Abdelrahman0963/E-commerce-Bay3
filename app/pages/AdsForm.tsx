@@ -6,6 +6,7 @@ import { FaDeleteLeft } from "react-icons/fa6";
 import toast from "react-hot-toast";
 import { usePostNewAds } from "@/app/hooks/UseNewAds";
 import { useAuthStore } from "../store/useAuthStore";
+import { uploadImages } from "@/app/services/mediaService"; // ⬅️ هنا نستورد uploadImages
 
 type AdFormData = {
   title: string;
@@ -14,30 +15,37 @@ type AdFormData = {
   category: string;
   location: string;
   phone: string;
-  images?: File[]; // ✅ ملفات صور
+  images?: File[];
   email?: string;
-  status?: string; // اختياري
-  createdAt?: string; // اختياري
 };
 
 const AdsForm = () => {
   const { register, handleSubmit } = useForm<AdFormData>();
-  const { mutate } = usePostNewAds();
+  const { mutate } = usePostNewAds(); // ⬅️ دي هتبقى بدل postAd
   const userId = useAuthStore((s) => s.id);
   const email = useAuthStore((s) => s.email);
   const t = useTranslations();
   const [images, setImages] = useState<string[]>([]);
   const [imageFiles, setImageFiles] = useState<File[]>([]);
 
-  const onSubmit = (data: AdFormData) => {
-    const newAd = {
-      ...data,
-      user: userId,
-      email: email || "",
-      images: imageFiles, // ✅ مهم
-    };
+  const onSubmit = async (data: AdFormData) => {
+    try {
+      let imageIds: number[] = [];
+      if (imageFiles.length > 0) {
+        imageIds = await uploadImages(imageFiles); // ⬅️ نرفع الصور الأول
+      }
 
-    mutate(newAd);
+      const newAd = {
+        ...data,
+        user: userId,
+        email: email || "",
+        images: imageIds, // ⬅️ نضيف الـ IDs مش الملفات
+      };
+
+      mutate(newAd); // ⬅️ دي اللي بتبعت الإعلان
+    } catch (err: any) {
+      toast.error(err.message || "❌ حصل خطأ أثناء رفع الصور أو الإعلان.");
+    }
   };
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -212,7 +220,7 @@ const AdsForm = () => {
 
           <button
             type="submit"
-            className="!mt-4 bg-blue-600 text-white !px-4 !py-2 rounded"
+            className="!mt-4 bg-blue-600 text-white !px-4 cursor-pointer !py-2 rounded"
           >
             {t("adsform.submit")}
           </button>

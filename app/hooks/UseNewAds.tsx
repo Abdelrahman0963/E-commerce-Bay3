@@ -4,6 +4,7 @@ import { fetchNewAds, postNewAds } from "@/app/services/NewAds";
 import { toast } from "react-hot-toast";
 import { uploadImages } from "../services/mediaService";
 import { useRouter } from "next/navigation";
+import useSWR from "swr";
 
 export const usePostNewAds = () => {
     const router = useRouter();
@@ -39,4 +40,17 @@ export const useGetNewAds = (slug?: string) => {
     });
 
     return { newads: data, isLoading, isError };
+}
+
+export function useNewAdsBySlug(slug: string) {
+    const { data, error, isLoading } = useSWR(
+        slug ? `newads-${slug}` : null,
+        () => fetchNewAds(slug)
+    );
+
+    return {
+        product: data?.data?.[0],
+        isLoading,
+        isError: !!error,
+    };
 }

@@ -6,10 +6,9 @@ export async function fetchNewAds(slug?: string) {
   let filters: string[] = [];
 
   if (slug) {
-    filters.push(`filters[slug][$eq]=${encodeURIComponent(slug)}`);
-  }
+  filters.push(`filters[slug][$eq]=${encodeURIComponent(slug)}`);  
+}
 
-  // لازم تعمل populate=user عشان يجيب بيانات اليوزر
   const query =
     filters.length > 0 ? `?${filters.join("&")}&populate=user` : `?populate=user`;
 
@@ -30,8 +29,9 @@ export async function fetchNewAds(slug?: string) {
     category: item.category,
     location: item.location,
     phone: item.phone,
-    images: [], // لو فيه صور تقدر تضيفها هنا
+    images: [], 
     status: item.statu,
+    slug: item.slug,
     user: item.user
       ? {
           id: item.user.id,

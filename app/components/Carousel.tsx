@@ -20,13 +20,16 @@ export default function Carousel({ images }: CarouselProps) {
     return (
         <div className="relative w-full max-w-lg mx-auto">
             <div className="h-96 overflow-hidden rounded-lg relative">
-                <Image
-                    src={`http://localhost:1337${images[current].url}`}
-                    alt="product image"
-                    width={600}
-                    height={600}
-                    className="object-contain w-full h-full"
-                />
+                {images.map((image, index) => (
+                    <Image
+                        key={index}
+                        src={`http://localhost:1337${image.url}`}
+                        alt="product image"
+                        width={600}
+                        height={600}
+                        className={`object-contain w-full h-full transition-opacity duration-500 ${index === current ? "opacity-100" : "opacity-0 absolute top-0 left-0"}`}
+                    />
+                ))}
             </div>
             <button
                 onClick={prev}
