@@ -6,7 +6,7 @@ import { FaDeleteLeft } from "react-icons/fa6";
 import toast from "react-hot-toast";
 import { usePostNewAds } from "@/app/hooks/UseNewAds";
 import { useAuthStore } from "../store/useAuthStore";
-import { uploadImages } from "@/app/services/mediaService"; // ⬅️ هنا نستورد uploadImages
+import { uploadImages } from "@/app/services/mediaService";
 
 type AdFormData = {
   title: string;
@@ -16,14 +16,13 @@ type AdFormData = {
   location: string;
   phone: string;
   images?: File[];
-  email?: string;
+  statu?: "new" | "pending" | "rejected" | "accepted";
 };
 
 const AdsForm = () => {
   const { register, handleSubmit } = useForm<AdFormData>();
-  const { mutate } = usePostNewAds(); // ⬅️ دي هتبقى بدل postAd
+  const { mutate } = usePostNewAds();
   const userId = useAuthStore((s) => s.id);
-  const email = useAuthStore((s) => s.email);
   const t = useTranslations();
   const [images, setImages] = useState<string[]>([]);
   const [imageFiles, setImageFiles] = useState<File[]>([]);
@@ -32,17 +31,16 @@ const AdsForm = () => {
     try {
       let imageIds: number[] = [];
       if (imageFiles.length > 0) {
-        imageIds = await uploadImages(imageFiles); // ⬅️ نرفع الصور الأول
+        imageIds = await uploadImages(imageFiles);
       }
 
       const newAd = {
         ...data,
-        user: userId,
-        email: email || "",
-        images: imageIds, // ⬅️ نضيف الـ IDs مش الملفات
+        user: userId, // بس كدا 👌
+        images: imageIds,
       };
 
-      mutate(newAd); // ⬅️ دي اللي بتبعت الإعلان
+      mutate(newAd);
     } catch (err: any) {
       toast.error(err.message || "❌ حصل خطأ أثناء رفع الصور أو الإعلان.");
     }

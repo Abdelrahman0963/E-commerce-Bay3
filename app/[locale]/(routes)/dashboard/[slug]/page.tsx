@@ -1,4 +1,9 @@
+import ProtectedAdmin from "@/app/components/ProtectedAdmin";
 import DashSlug from "@/app/pages/DashSlug";
 export default function Page({ params }: { params: { slug: string } }) {
-    return <DashSlug slug={params.slug} />;
+    return (
+        <ProtectedAdmin>
+            <DashSlug slug={params.slug} />;
+        </ProtectedAdmin>
+    )
 }

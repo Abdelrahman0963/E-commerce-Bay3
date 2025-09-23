@@ -18,7 +18,10 @@ const ProtectedAdmin = ({ children }: { children: React.ReactNode }) => {
     }, [hydrated, isLoggedIn, UserRank]);
 
     if (!hydrated || !isLoggedIn || UserRank !== "admin") return null;
-
+    const header = document.querySelector('header');
+    const footer = document.querySelector('footer');
+    if (header) header.style.display = 'none';
+    if (footer) footer.style.display = 'none';
     return <>{children}</>;
 };
 

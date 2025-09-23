@@ -3,17 +3,18 @@ import createNextIntlPlugin from "next-intl/plugin";
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
- images: {
-  remotePatterns: [
-    {
-      protocol: "http",
-      hostname: "localhost",
-      port: "1337",
-      pathname: "/uploads/**",
-    },
-  ],
-},
-    eslint: {
+  images: {
+    remotePatterns: [
+      {
+        protocol: "http",
+        hostname: "localhost",
+        port: "1337",
+        pathname: "/uploads/**",
+
+      },
+    ],
+  },
+  eslint: {
     ignoreDuringBuilds: true,
   },
   typescript: {

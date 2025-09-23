@@ -49,7 +49,7 @@ export function useNewAdsBySlug(slug: string) {
     );
 
     return {
-        product: data?.data?.[0],
+        product: data?.[0],
         isLoading,
         isError: !!error,
     };
