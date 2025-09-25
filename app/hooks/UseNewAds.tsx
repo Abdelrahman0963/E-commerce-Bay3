@@ -21,18 +21,6 @@ export const usePostNewAds = () => {
     });
 };
 
-export const usePostNewImages = () => {
-    return useMutation({
-        mutationFn: (files: File[]) => uploadImages(files),
-        onSuccess: () => {
-            toast.success("🎉 تم رفع الصور بنجاح");
-        },
-        onError: (error: any) => {
-            toast.error(error.message || "❌ فشل رفع الصور. تأكد من البيانات وحاول مرة أخرى.");
-            console.log("errrrrrrorImages:", error);
-        },
-    });
-}
 export const useGetNewAds = (slug?: string) => {
     const { data, isLoading, isError } = useQuery({
         queryKey: ["newads", slug],

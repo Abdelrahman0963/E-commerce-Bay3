@@ -50,17 +50,9 @@ export async function fetchNewAds(slug?: string) {
 export async function postNewAds(newAd: any) {
   let imageIds: number[] = [];
 
-  if (Array.isArray(newAd.images) && newAd.images.length > 0) {
-    const first = newAd.images[0];
-    if (typeof first === "number") {
-      imageIds = newAd.images as number[];
-    } else if (first instanceof File || first instanceof Blob) {
-      imageIds = await uploadImages(newAd.images as File[]);
-    } else {
-      imageIds = newAd.images.map((i: any) => Number(i)).filter((n: number) => !Number.isNaN(n));
-    }
+  if (newAd.images && Array.isArray(newAd.images) && newAd.images.length > 0) {
+    imageIds = newAd.images;
   }
-
   const adPayload = {
     title: newAd.title,
     description: newAd.description,

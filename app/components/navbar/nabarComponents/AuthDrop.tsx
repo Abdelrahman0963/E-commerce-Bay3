@@ -8,6 +8,7 @@ import { useTranslations } from 'next-intl';
 const AuthDrop = () => {
     const logout = useAuthStore((state) => state.logout);
     const username = useAuthStore((state) => state.username);
+    const UserRank = useAuthStore((state) => state.UserRank);
     const router = useRouter();
     const t = useTranslations();
 
@@ -31,14 +32,13 @@ const AuthDrop = () => {
                 <strong className="w-14 h-14 flex items-center justify-center rounded-full bg-[var(--user-color)] text-[var(--primary-color)] border-2 border-gray-500 text-[1.8rem]">
                     {initials}
                 </strong>
-
                 <nav className="flex flex-col items-start justify-end">
                     <span className="text-black">{t("login.hiUser")}</span>
                     <h3 className="text-black">{username || "Guest"}</h3>
                 </nav>
             </nav>
-
             <nav className="flex flex-col items-start justify-end gap-4 w-full border-t-2 border-gray-300 !pt-6">
+                {UserRank === "admin" && (<Link href="/dashboard" className="text-black flex items-center gap-1 hover:text-[var(--primary-color)]">Dashboard</Link>)}
                 <Link
                     href="/notifications"
                     className="text-black flex items-center gap-1 hover:text-[var(--primary-color)]"
