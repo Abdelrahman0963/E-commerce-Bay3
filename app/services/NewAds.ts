@@ -84,3 +84,30 @@ export async function postNewAds(newAd: any) {
 
   return responseData;
 }
+export async function putNewAds(id: number, updatedAd: any) {
+  const adPayload: any = {
+    title: updatedAd.title,
+    description: updatedAd.description,
+    location: updatedAd.location,
+    phone: updatedAd.phone,
+    price: updatedAd.price,
+    category: updatedAd.category,
+    images: updatedAd.images,
+    statu: updatedAd.statu || "new",
+    ...(updatedAd.user && { user: updatedAd.user }),
+    ...(updatedAd.email && { email: updatedAd.email }),
+  };
+
+  const res = await fetch(`${newAdsUrl}/${id}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ data: adPayload }),
+  });
+
+  if (!res.ok) {
+    throw new Error("Failed to update ad");
+  }
+  return await res.json();
+}
