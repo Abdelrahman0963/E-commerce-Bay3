@@ -22,6 +22,7 @@ export async function fetchNewAds(slug?: string) {
 
   const formattedData = json.data.map((item: any) => ({
     id: item.id,
+    documentId: item.documentId,
     title: item.title,
     description: item.description,
     price: item.price,
@@ -29,7 +30,7 @@ export async function fetchNewAds(slug?: string) {
     location: item.location,
     phone: item.phone,
     images: item.images ? item.images.map((img: any) => ({
-      url: img.url, // هيتبعت للـ Carousel
+      url: img.url,
     }))
       : [],
     statu: item.statu,
@@ -46,13 +47,13 @@ export async function fetchNewAds(slug?: string) {
 
   return formattedData;
 }
-
 export async function postNewAds(newAd: any) {
   let imageIds: number[] = [];
 
   if (newAd.images && Array.isArray(newAd.images) && newAd.images.length > 0) {
     imageIds = newAd.images;
   }
+
   const adPayload = {
     title: newAd.title,
     description: newAd.description,
@@ -60,11 +61,12 @@ export async function postNewAds(newAd: any) {
     phone: newAd.phone,
     price: newAd.price,
     category: newAd.category,
-    images: imageIds,
+    images: {
+      connect: imageIds.map((id) => ({ id })),
+    },
     statu: newAd.statu || "new",
     user: newAd.user ?? undefined,
     email: newAd.email ?? undefined,
-
   };
 
   const res = await fetch(newAdsUrl, {
@@ -79,35 +81,51 @@ export async function postNewAds(newAd: any) {
 
   if (!res.ok) {
     console.error("Error details:", responseData);
-    throw new Error(responseData?.error?.message || JSON.stringify(responseData) || "Unknown error");
+    throw new Error(
+      responseData?.error?.message ||
+      JSON.stringify(responseData) ||
+      "Unknown error"
+    );
   }
 
   return responseData;
 }
-export async function putNewAds(id: number, updatedAd: any) {
-  const adPayload: any = {
-    title: updatedAd.title,
-    description: updatedAd.description,
-    location: updatedAd.location,
-    phone: updatedAd.phone,
-    price: updatedAd.price,
-    category: updatedAd.category,
-    images: updatedAd.images,
-    statu: updatedAd.statu || "new",
-    ...(updatedAd.user && { user: updatedAd.user }),
-    ...(updatedAd.email && { email: updatedAd.email }),
-  };
 
-  const res = await fetch(`${newAdsUrl}/${id}`, {
+export async function putNewAds({
+  documentId,
+  data,
+}: {
+  documentId: string;
+  data: Partial<{
+    title: string;
+    description: string;
+    location: string;
+    phone: string;
+    price: number;
+    category: string;
+    images: string[];
+    statu: string;
+  }>;
+}) {
+  const url = `${newAdsUrl}/${documentId}`;
+  const res = await fetch(url, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ data: adPayload }),
+    body: JSON.stringify({ data }),
   });
 
+  const responseData = await res.json();
+
   if (!res.ok) {
-    throw new Error("Failed to update ad");
+    console.error("Error details:", responseData);
+    throw new Error(
+      responseData?.error?.message ||
+      JSON.stringify(responseData) ||
+      "Unknown error"
+    );
   }
-  return await res.json();
+
+  return responseData;
 }

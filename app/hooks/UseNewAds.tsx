@@ -1,8 +1,7 @@
 "use client";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { fetchNewAds, postNewAds } from "@/app/services/NewAds";
+import { fetchNewAds, postNewAds, putNewAds } from "@/app/services/NewAds";
 import { toast } from "react-hot-toast";
-import { uploadImages } from "../services/mediaService";
 import { useRouter } from "next/navigation";
 import useSWR from "swr";
 
@@ -20,6 +19,21 @@ export const usePostNewAds = () => {
         },
     });
 };
+export function usePutNewAds() {
+    return useMutation({
+        mutationFn: (vars: { documentId: string; data: any }) =>
+            putNewAds(vars),
+        onSuccess: () => {
+            toast.success("🎉 تم تحديث الاعلان بنجاح");
+        },
+        onError: (error: any) => {
+            toast.error(
+                error.message || "❌ فشل التحديث. تأكد من البيانات وحاول مرة أخرى."
+            );
+            console.log("errrrrrror:", error);
+        },
+    });
+}
 
 export const useGetNewAds = (slug?: string) => {
     const { data, isLoading, isError } = useQuery({
@@ -42,3 +56,4 @@ export function useNewAdsBySlug(slug: string) {
         isError: !!error,
     };
 }
+

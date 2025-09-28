@@ -1,5 +1,6 @@
+const baseUrl = `http://localhost:1337/api/products`;
+
 export async function fetchProducts(slug?: string, category?: string) {
-  const baseUrl = `http://localhost:1337/api/products`;
 
   let filters: string[] = [];
 
@@ -22,4 +23,41 @@ export async function fetchProducts(slug?: string, category?: string) {
   }
 
   return res.json();
+}
+
+type Product = {
+  id: string;
+  documentId: string;
+  title: string;
+  description?: string;
+  price?: number;
+  category?: string;
+  location?: string;
+  phone?: string;
+  images?: [];
+  slug: string;
+  user?: {
+    id?: number;
+    username: string;
+    email: string;
+  };
+}
+export async function postProducts(product: Product, token?: string) {
+  const res = await fetch(baseUrl, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
+    },
+    body: JSON.stringify({ data: product }),
+  });
+
+  const responseData = await res.json();
+
+  if (!res.ok) {
+    console.error("Error details:", responseData);
+    throw new Error(responseData?.error?.message || "Unknown error");
+  }
+
+  return responseData;
 }

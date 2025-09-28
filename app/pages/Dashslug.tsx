@@ -1,21 +1,48 @@
 'use client';
-import React, { act } from "react";
+import React from "react";
 import CarouselDashboard from "../components/CarouselDashboard";
-import { useNewAdsBySlug } from "../hooks/UseNewAds";
+import { useNewAdsBySlug, usePostNewAds, usePutNewAds } from "../hooks/UseNewAds";
 
-export default function DashSlug({ slug }: { slug: string }) {
+export default function DashSlug({ slug }: { slug: string; }) {
     const { product, isLoading, isError } = useNewAdsBySlug(slug);
+    const { mutateAsync: putAsync } = usePutNewAds();
+    const { mutateAsync: postAsync } = usePostNewAds();
     const statu = product?.statu;
     const [status, setStatus] = React.useState<string>(statu || "new");
     const [open, setOpen] = React.useState(false);
+
     const options = [
         { value: "new", label: "New", color: "bg-blue-500" },
-        { value: "pending", label: "Pending", color: "bg-yellow-500" },
-        { value: "rejected", label: "Rejected", color: "bg-red-500", active: "delete" },
+        { value: "pending", label: "Pending", color: "bg-yellow-500", active: "Send" },
+        { value: "rejected", label: "Rejected", color: "bg-red-500", active: "Delete" },
         { value: "accepted", label: "Accepted", color: "bg-green-500", active: "Push" },
     ];
+    React.useEffect(() => {
+        if (product?.statu) {
+            setStatus(product.statu);
+        }
+    }, [product?.statu]);
+    const handleStatusChange = async (newStatus: string) => {
+        try {
+            await putAsync({
+                documentId: product.documentId,
+                data: { statu: newStatus },
+            });
+
+            if (newStatus === "accepted") {
+                await postAsync(product);
+            }
+            setStatus(newStatus);
+            setOpen(false);
+        } catch (e) {
+            console.error("Error updating status:", e);
+        }
+    };
+
+
     if (isLoading) return <p className="!py-26">Loading...</p>;
     if (isError || !product) return <p className="!py-26">Error or Not Found</p>;
+
     const { title, description, price, company, location, images } = product;
 
     return (
@@ -27,28 +54,40 @@ export default function DashSlug({ slug }: { slug: string }) {
                 <p className="mt-2 font-semibold">{price}</p>
                 <p>{company}</p>
                 <p>{location}</p>
+
                 <div className="relative w-full max-w-xs !mt-4 text-black">
                     <nav className="flex items-center w-full gap-4">
-                        <button onClick={() => setOpen(!open)} className="flex items-center jastify-between gap-2 w-40 !p-2 rounded bg-white text-black">
-                            <span className={`w-3 h-3 rounded-full ${options.find((o) => o.value === status)?.color
-                                }`}></span>
-                            {status}
+                        <button
+                            onClick={() => setOpen(!open)}
+                            className="flex items-center justify-between gap-2 w-40 !p-2 rounded bg-white text-black"
+                        >
+                            <span
+                                className={`w-3 h-3 rounded-full ${options.find((o) => o.value === status)?.color
+                                    }`}
+                            ></span>
+                            {options.find((o) => o.value === status)?.label}
                         </button>
-                        {!options.find((o) => o.value === status)?.active ? null : (
-                            <button className={`!p-2 rounded cursor-pointer ${options.find((o) => o.value === status)?.active === "delete"
-                                ? "bg-red-500 text-white"
-                                : "bg-green-500 text-white"
-                                }`}>
+
+                        {options.find((o) => o.value === status)?.active && (
+                            <button
+                                key={status}
+                                onClick={() => handleStatusChange(status)}
+                                className={`!p-2 rounded cursor-pointer ${options.find((o) => o.value === status)?.active === "Delete"
+                                    ? "bg-red-500 text-white"
+                                    : `${options.find((o) => o.value === status)?.color} text-white`
+                                    }`}
+                            >
                                 {options.find((o) => o.value === status)?.active}
                             </button>
                         )}
                     </nav>
+
                     {open && (
-                        <div onClick={() => setOpen(false)} className="absolute !mt-2 w-40 bg-white shadow rounded">
+                        <div className="absolute !mt-2 w-40 bg-white shadow rounded z-10">
                             {options.map((opt) => (
                                 <div
                                     key={opt.value}
-                                    onClick={() => setStatus(opt.value)}
+                                    onClick={() => handleStatusChange(opt.value)}
                                     className="flex items-center gap-2 !px-2 !py-1 text-black hover:bg-gray-100 cursor-pointer"
                                 >
                                     <span className={`w-3 h-3 rounded-full ${opt.color}`}></span>

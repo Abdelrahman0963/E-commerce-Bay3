@@ -1,8 +1,9 @@
 "use client";
 
-import { useQuery } from "@tanstack/react-query";
-import { fetchProducts } from "../services/ProductsApi";
+import { useQuery, useMutation } from "@tanstack/react-query";
+import { fetchProducts, postProducts } from "../services/ProductsApi";
 import useSWR from "swr";
+import toast from "react-hot-toast";
 export const useProducts = (slug?: string) => {
   const { data, isLoading, isError, error } = useQuery({
     queryKey: ["products", slug],
@@ -37,4 +38,17 @@ export function useCategoriesSlug(category?: string) {
     isLoading,
     isError: !!error,
   };
+}
+
+export function usePostProduct() {
+  return useMutation({
+    mutationFn: (newProduct: any) => postProducts(newProduct),
+    onSuccess: () => {
+      toast.success("🎉 تم عرض المنتج في بـايع بنجاح");
+    },
+    onError: (error: any) => {
+      toast.error(error.message || "❌ فشل الارسال. تأكد من البيانات وحاول مرة أخرى.");
+      console.log("errrrrrror:", error);
+    },
+  })
 }
