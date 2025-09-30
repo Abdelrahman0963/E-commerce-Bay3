@@ -1,12 +1,13 @@
 'use client';
 import React from "react";
 import CarouselDashboard from "../components/CarouselDashboard";
-import { useNewAdsBySlug, usePostNewAds, usePutNewAds } from "../hooks/UseNewAds";
+import { useNewAdsBySlug, usePutNewAds } from "../hooks/UseNewAds";
+import { usePostProduct } from "../hooks/UseProducts";
 
 export default function DashSlug({ slug }: { slug: string; }) {
     const { product, isLoading, isError } = useNewAdsBySlug(slug);
     const { mutateAsync: putAsync } = usePutNewAds();
-    const { mutateAsync: postAsync } = usePostNewAds();
+    const { mutateAsync: postAsync } = usePostProduct();
     const statu = product?.statu;
     const [status, setStatus] = React.useState<string>(statu || "new");
     const [open, setOpen] = React.useState(false);
@@ -67,19 +68,6 @@ export default function DashSlug({ slug }: { slug: string; }) {
                             ></span>
                             {options.find((o) => o.value === status)?.label}
                         </button>
-
-                        {options.find((o) => o.value === status)?.active && (
-                            <button
-                                key={status}
-                                onClick={() => handleStatusChange(status)}
-                                className={`!p-2 rounded cursor-pointer ${options.find((o) => o.value === status)?.active === "Delete"
-                                    ? "bg-red-500 text-white"
-                                    : `${options.find((o) => o.value === status)?.color} text-white`
-                                    }`}
-                            >
-                                {options.find((o) => o.value === status)?.active}
-                            </button>
-                        )}
                     </nav>
 
                     {open && (

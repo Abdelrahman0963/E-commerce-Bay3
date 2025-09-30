@@ -6,7 +6,7 @@ import { FaDeleteLeft } from "react-icons/fa6";
 import toast from "react-hot-toast";
 import { usePostNewAds } from "@/app/hooks/UseNewAds";
 import { useAuthStore } from "../store/useAuthStore";
-import { uploadImages } from "@/app/services/mediaService";
+import { uploadImages } from "@/app/services/NewAds";
 
 type AdFormData = {
   title: string;

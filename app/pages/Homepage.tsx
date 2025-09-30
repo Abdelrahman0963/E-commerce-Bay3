@@ -57,7 +57,7 @@ const Homepage = () => {
                     {product.price} {t("homepage.price")}
                   </p>
                   <h2>{product.title}</h2>
-                  <p>{product.description}</p>
+                  <p className="">{product.description}</p>
                 </Link>
               </div>
             ))
