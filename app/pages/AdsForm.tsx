@@ -15,8 +15,6 @@ type AdFormData = {
   category: string;
   location: string;
   phone: string;
-  images?: File[
-  ];
   statu?: "new" | "pending" | "rejected" | "accepted";
   slug?: string
 };
@@ -31,19 +29,29 @@ const AdsForm = () => {
 
   const onSubmit = async (data: AdFormData) => {
     try {
-      const uploadedImages = await uploadImages(imageFiles);
-      const imageIds = uploadedImages.map((img: any) => img.ids);
+      let imageIds: number[] = [];
+      if (imageFiles.length > 0) {
+        imageIds = await uploadImages(imageFiles);
+      }
 
       const newAd = {
-        ...data,
+        title: data.title,
+        description: data.description,
+        price: data.price,
+        category: data.category,
+        location: data.location,
+        phone: data.phone,
         user: userId,
         images: imageIds,
+        statu: "new",
       };
+
       mutate(newAd);
     } catch (err: any) {
       toast.error(err.message || "❌ حصل خطأ أثناء رفع الصور أو الإعلان.");
     }
   };
+
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files) return;
     const files = Array.from(e.target.files);

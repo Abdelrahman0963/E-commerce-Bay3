@@ -1,7 +1,7 @@
 "use client"
 import Image from 'next/image'
 import React from 'react'
-import { FieldValues, Form, SubmitHandler, useForm } from 'react-hook-form'
+import { FieldValues, SubmitHandler, useForm } from 'react-hook-form'
 import { UseRegister } from "../hooks/UseAuth";
 import { HiArrowTrendingDown } from 'react-icons/hi2'
 import { useTranslations } from 'next-intl'

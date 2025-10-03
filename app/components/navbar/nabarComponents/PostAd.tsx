@@ -13,7 +13,7 @@ const PostAd = () => {
   return (
     <Link
       href={token ? "/adsform" : "/login"}
-      className="hidden lg:flex items-center justify-center bg-[var(--primary-color)] text-white !py-2 !px-4 h-12 !text-sm rounded-lg hover:bg-[#c33a3b] cursor-pointer relative"
+      className="lg:flex items-center justify-center bg-[var(--primary-color)] text-white !py-2 !px-4 md:h-12 !text-sm rounded-lg hover:bg-[#c33a3b] cursor-pointer relative"
     >
       <span className="text-white whitespace-nowrap w-full font-bold lg:block hidden">
         {t("navbar.postbtn")}

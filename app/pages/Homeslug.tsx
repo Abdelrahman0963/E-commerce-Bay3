@@ -14,15 +14,8 @@ import { MdOutlineMyLocation } from "react-icons/md";
 export default function Homeslug({ slug }: { slug: string }) {
   const [show, setShow] = React.useState(false);
   const { product, isLoading, isError } = useProductBySlug(slug);
-  const { token, username, } = useAuthStore();
+  const { token } = useAuthStore();
   const t = useTranslations();
-  const initials = username
-    ? username
-      .split(" ")
-      .map((n) => n[0])
-      .join("")
-      .toUpperCase()
-    : "U";
   if (isLoading) return <ProductSkeleton />;
   if (isError || !product) return <Notfound />;
   const { title, description, price, company, location, images, phone, createdAt } = product;
@@ -48,6 +41,27 @@ export default function Homeslug({ slug }: { slug: string }) {
   const notTokin = () => {
     toast.error("You need to login first");
   }
+  type Ad = {
+    id: string;
+    title: string;
+    description?: string;
+    price?: number;
+    category?: string;
+    location?: string;
+    phone?: string;
+    images?: string[];
+    statu: "new" | "pending" | "rejected" | "accepted" | string;
+    user?: {
+      id?: number;
+      username: string;
+      email: string;
+    };
+    slug: string;
+    createdAt: string;
+  };
+
+  const username = product.user ? product.user.username : "";
+
   return (
     <section className="container flex flex-col gap-10 !mx-auto !py-26 md:!py-36 md:!px-6 !px-4">
       <div className="flex md:justify-between gap-6 flex-col md:flex-row items-center w-full">
@@ -55,7 +69,11 @@ export default function Homeslug({ slug }: { slug: string }) {
         <div className="flex flex-col gap-2 border border-gray-300 !p-4 rounded-md w-full h-full">
           <nav className="flex items-center gap-4 ">
             <strong className="w-14 h-14 flex items-center justify-center rounded-full bg-[var(--user-color)] text-[var(--primary-color)] border-2 border-gray-500 text-[1.8rem]">
-              {initials}
+              {username
+                .split(" ")
+                .map((n: string) => n[0])
+                .join("")
+                .toUpperCase()}
             </strong>
             <p className="text-black">{username}</p>
           </nav>

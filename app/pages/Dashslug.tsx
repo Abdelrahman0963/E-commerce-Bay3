@@ -3,6 +3,8 @@ import React from "react";
 import CarouselDashboard from "../components/CarouselDashboard";
 import { useNewAdsBySlug, usePutNewAds } from "../hooks/UseNewAds";
 import { usePostProduct } from "../hooks/UseProducts";
+import { ProductSkeleton } from "../components/Loading";
+import Notfound from "../components/Notfound";
 
 export default function DashSlug({ slug }: { slug: string; }) {
     const { product, isLoading, isError } = useNewAdsBySlug(slug);
@@ -41,8 +43,8 @@ export default function DashSlug({ slug }: { slug: string; }) {
     };
 
 
-    if (isLoading) return <p className="!py-26">Loading...</p>;
-    if (isError || !product) return <p className="!py-26">Error or Not Found</p>;
+    if (isLoading) return <ProductSkeleton />;
+    if (isError || !product) return <Notfound />;
 
     const { title, description, price, company, location, images } = product;
 

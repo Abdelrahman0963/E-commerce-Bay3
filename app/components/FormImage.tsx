@@ -3,12 +3,10 @@ import { useTranslations } from "next-intl";
 import React, { useState, useEffect } from "react";
 import toast from "react-hot-toast";
 import { FaDeleteLeft } from "react-icons/fa6";
-import { usePostNewImages } from "@/app/hooks/UseNewAds";
 
 const FormImage = () => {
     const [images, setImages] = useState<string[]>([]);
     const [imageFiles, setImageFiles] = useState<File[]>([]);
-    const { mutate } = usePostNewImages();
     const t = useTranslations();
 
     const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {

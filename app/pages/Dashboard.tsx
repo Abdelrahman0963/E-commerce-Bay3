@@ -3,7 +3,8 @@ import React, { useState } from "react";
 import { useGetNewAds } from "@/app/hooks/UseNewAds";
 import { LiaEdit } from "react-icons/lia";
 import Link from "next/link";
-import DashSlug from "./DashSlug";
+import DashSkeleton from "../components/DashSkeleton";
+import Notfound from "../components/Notfound";
 const Dashboard = () => {
     const { newads: ads, isLoading, isError } = useGetNewAds();
     const [activeTab, setActiveTab] = useState<"all" | "new" | "pending" | "rejected">("all");
@@ -34,10 +35,10 @@ const Dashboard = () => {
                 ? ads.filter((ad) => ad.status === activeTab && ad.user !== null)
                 : [];
     if (isLoading) {
-        return <div className="!py-26">Loading...</div>;
+        return <DashSkeleton />;
     }
     if (isError) {
-        return <div className="!py-26">Error loading ads.</div>;
+        return <Notfound />
     }
     return (
         <section className="min-h-screen w-full flex flex-col gap-4 items-center bg-[var(--dashboard-color)] !py-10 !px-4 md:!px-6">

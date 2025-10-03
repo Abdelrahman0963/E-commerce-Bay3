@@ -75,13 +75,10 @@ export async function fetchNewAds(slug?: string) {
   return formattedData;
 }
 
-export async function uploadImages(files: (File | Blob)[]): Promise<{ id: number }[]> {
-  if (!files || files.length === 0) return [];
-
+// 1. Upload images and get their IDs
+export async function uploadImages(files: File[]) {
   const formData = new FormData();
-  files.forEach((file) => {
-    formData.append("files", file);
-  });
+  files.forEach(file => formData.append("files", file));
 
   const res = await fetch("http://localhost:1337/api/upload", {
     method: "POST",
@@ -89,28 +86,30 @@ export async function uploadImages(files: (File | Blob)[]): Promise<{ id: number
   });
 
   if (!res.ok) {
-    const errorText = await res.text();
-    console.error("uploadImages failed:", errorText);
-    throw new Error(`Upload failed: ${res.status} ${res.statusText}`);
+    const err = await res.text();
+    console.error("Upload error:", err);
+    throw new Error("فشل رفع الصور");
   }
 
-  return res.json(); // بيرجع [{ id, name, url }]
+  const data = await res.json();
+  // Extract the array of uploaded file IDs
+  const imageIds = data.map((file: any) => file.id);
+  return imageIds;
 }
 
-export async function postNewAds(newAd: any) {
+// 2. Post new ad, linking the uploaded images by their IDs
+export async function postNewAds(newAd: any, imageIds: number[]) {
   const url = `${newAdsUrl}?populate=user`;
   const token = newAd.token;
-  const uploaded = newAd.images?.length ? await uploadImages(newAd.images) : [];
-  const imageIds = uploaded.map((img: any) => img.id);
   const dataPayload: any = {
     title: newAd.title,
     description: newAd.description,
     location: newAd.location,
     phone: newAd.phone,
+    images: imageIds, // Link images by their IDs
     price: newAd.price,
     category: newAd.category,
     user: newAd.user,
-    images: imageIds,
     statu: newAd.statu || "new",
   };
   const payload = { data: dataPayload };
@@ -127,7 +126,6 @@ export async function postNewAds(newAd: any) {
     body: JSON.stringify(payload),
   });
 
-  // flexible parse
   let responseBody: any = null;
   try {
     responseBody = await res.json();

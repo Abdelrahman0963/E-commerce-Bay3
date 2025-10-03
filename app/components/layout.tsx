@@ -6,7 +6,6 @@ import Navbar from "./navbar/Navbar";
 export default function RootLayout({ children }: { children: React.ReactNode }) {
     const pathname = usePathname();
 
-    // شرط لإخفاء الهيدر والفوتر في صفحات معينة
     const hideHeaderFooter = pathname.includes("/dashboard");
 
     return (

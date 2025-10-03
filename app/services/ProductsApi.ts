@@ -45,15 +45,12 @@ type Product = {
 };
 
 export async function postProducts(product: Product, token?: string) {
-  // جهز الـ documentIds 
   let imageDocumentIds: string[] = [];
   if (product.images && Array.isArray(product.images) && product.images.length > 0) {
     imageDocumentIds = product.images.map((img: any) =>
       typeof img === "string" ? img : img.url
     );
   }
-
-  // جهز اليوزر
   const userDocumentId =
     typeof product.user === "string" ? product.user : product.user?.documentId;
 
@@ -63,10 +60,9 @@ export async function postProducts(product: Product, token?: string) {
     price: product.price,
     category: product.category,
     location: product.location,
-    images: imageDocumentIds,
     phone: product.phone,
     slug: product.slug,
-    user: userDocumentId ? { connect: [userDocumentId] } : undefined,
+    user: product.user,
   };
 
   const res = await fetch(baseUrl, {

@@ -3,20 +3,21 @@ import { useLocale, useTranslations } from "next-intl";
 import { usePathname, useRouter } from "next/navigation";
 import Categories from "./Categories";
 import PostAd from "./PostAd";
-import SearchNav from "./SearchNav";
 import { MdOutlineLanguage } from "react-icons/md";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { RiMenu4Fill } from "react-icons/ri";
 import Link from "next/link";
 import { useAuthStore } from "@/app/store/useAuthStore";
 import AuthNav from "./AuthNav";
+import SearchNav from "./SearchNav";
+
 
 const NavbarCom = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const [dirction, setDirction] = useState<string>("ltr");
 
-  const isLoggedIn = useAuthStore((state) => state.isLoggedIn); // ✅ تعديل مهم
+  const isLoggedIn = useAuthStore((state) => state.isLoggedIn);
   const locale = useLocale();
   const pathname = usePathname();
   const router = useRouter();
@@ -40,12 +41,26 @@ const NavbarCom = () => {
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setIsOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
   return (
     <>
       {(isMobile && isOpen) || !isMobile ? (
         <div
-          className={`navbar-components bg-white  h-auto flex  gap-4 md:flex-row flex-col items-center justify-end ${isMobile ? "w-full !px-4  absolute top-16 right-2 z-50" : ""} `}
+          ref={dropdownRef}
+          className={`bg-white max-h-screen flex  gap-4 md:flex-row flex-col items-center justify-center ${isMobile ? "w-full !p-4  absolute  top-16 md:right-2 z-50" : ""} `}
         >
           <SearchNav />
           <button
@@ -68,7 +83,6 @@ const NavbarCom = () => {
           <PostAd />
         </div>
       ) : null}
-
       {isMobile && (
         <RiMenu4Fill
           onClick={() => setIsOpen(!isOpen)}
