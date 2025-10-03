@@ -1,13 +1,7 @@
-const newAdsUrl = "http://localhost:1337/api/news";
 
-function normalizeJsonResponse(json: any) {
-  // Strapi قد يرجع array أو { data: [...] } أو { files: [...] } حسب النسخة/الإعداد
-  if (!json) return [];
-  if (Array.isArray(json)) return json;
-  if (json.data && Array.isArray(json.data)) return json.data;
-  if (json.files && Array.isArray(json.files)) return json.files;
-  return [];
-}
+
+
+const newAdsUrl = "http://localhost:1337/api/news";
 
 export async function fetchNewAds(slug?: string) {
   let filters: string[] = [];
@@ -85,9 +79,8 @@ export async function uploadImages(files: (File | Blob)[]): Promise<{ id: number
   if (!files || files.length === 0) return [];
 
   const formData = new FormData();
-  files.forEach((file, index) => {
-    const fileName = (file as File).name ?? `image_${index}.jpg`;
-    formData.append("files", file, fileName);
+  files.forEach((file) => {
+    formData.append("files", file);
   });
 
   const res = await fetch("http://localhost:1337/api/upload", {
@@ -95,35 +88,20 @@ export async function uploadImages(files: (File | Blob)[]): Promise<{ id: number
     body: formData,
   });
 
-  let json: any = null;
-  try {
-    json = await res.json();
-  } catch {
-    json = null;
-  }
-
   if (!res.ok) {
-    console.error("uploadImages failed:", res.status, res.statusText, json);
-    // رُد خطأ واضح للمستدعي
+    const errorText = await res.text();
+    console.error("uploadImages failed:", errorText);
     throw new Error(`Upload failed: ${res.status} ${res.statusText}`);
   }
 
-  // مرونة: Strapi قد يرجع array أو { data: [...] }
-  const items = normalizeJsonResponse(json);
-  // extract id robustly
-  return items.map((f: any) => {
-    if (f.id) return { id: f.id };
-    if (f.data?.id) return { id: f.data.id };
-    if (f.attributes?.id) return { id: f.attributes.id };
-    return { id: null };
-  }).filter((x: any) => x.id != null);
+  return res.json(); // بيرجع [{ id, name, url }]
 }
 
 export async function postNewAds(newAd: any) {
   const url = `${newAdsUrl}?populate=user`;
   const token = newAd.token;
-
-  // Build payload (لا ترسِل الحقل user كـ object إن لم تكن متأكد — غالبًا الـ token كافي)
+  const uploaded = newAd.images?.length ? await uploadImages(newAd.images) : [];
+  const imageIds = uploaded.map((img: any) => img.id);
   const dataPayload: any = {
     title: newAd.title,
     description: newAd.description,
@@ -131,18 +109,10 @@ export async function postNewAds(newAd: any) {
     phone: newAd.phone,
     price: newAd.price,
     category: newAd.category,
+    user: newAd.user,
+    images: imageIds,
     statu: newAd.statu || "new",
   };
-
-  // attach images as IDs — بعض نسخ Strapi تحتاج { images: [id, id] } وبعضها تحتاج { images: [{id}, ...] }.
-  if (Array.isArray(newAd.images) && newAd.images.length > 0) {
-    // نحاول الطريقة البسيطة أولاً (array of ids)
-    dataPayload.images = newAd.images;
-  }
-
-  // optionally add email/user if explicitly needed (ابتعد عنها لو تستخدم الـ token)
-  if (newAd.email) dataPayload.email = newAd.email;
-
   const payload = { data: dataPayload };
 
   const headers: Record<string, string> = {
@@ -170,15 +140,16 @@ export async function postNewAds(newAd: any) {
   }
 
   if (!res.ok) {
-    // طباعة تفصيلية لتتبع السبب
     console.error("❌ postNewAds failed:", {
       status: res.status,
       statusText: res.statusText,
       body: responseBody,
     });
-    // حاول تجميع رسالة مفيدة
-    const serverMsg = responseBody?.error?.message || responseBody?.message || JSON.stringify(responseBody);
-    throw new Error(serverMsg || `Request failed: ${res.status} ${res.statusText}`);
+    throw new Error(
+      responseBody?.error?.message ||
+      JSON.stringify(responseBody) ||
+      `Unknown error ${res.status}`
+    );
   }
 
   return responseBody;

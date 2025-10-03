@@ -55,7 +55,6 @@ export default function DashSlug({ slug }: { slug: string; }) {
                 <p className="mt-2 font-semibold">{price}</p>
                 <p>{company}</p>
                 <p>{location}</p>
-
                 <div className="relative w-full max-w-xs !mt-4 text-black">
                     <nav className="flex items-center w-full gap-4">
                         <button

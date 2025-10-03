@@ -11,6 +11,12 @@ import { GiCutDiamond } from "react-icons/gi";
 const Homecat = ({ category }: { category: string }) => {
     const { categories, isLoading, isError } = useCategoriesSlug(category);
     const t = useTranslations();
+    const displayDescription = (text: string = "", limit: number) => {
+        if (text.length > limit) {
+            return text.slice(0, limit) + "...";
+        }
+        return text;
+    };
     type Product = {
         id: string;
         title: string;
@@ -51,7 +57,7 @@ const Homecat = ({ category }: { category: string }) => {
                                 {product.price} {t("homepage.price")}
                             </p>
                             <h2 className="text-lg font-semibold">{product.title}</h2>
-                            <p className="text-gray-600">{product.description}</p>
+                            <p className="text-gray-600">{displayDescription(product.description, 70)}</p>
                         </Link>
                     </div>
                 ))}

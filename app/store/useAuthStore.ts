@@ -32,7 +32,6 @@ export const useAuthStore = create<AuthState & AuthActions>()(
       token: null,
       isLoggedIn: false,
       hydrated: false,
-
       login: (data) =>
         set(() => ({
           ...data,

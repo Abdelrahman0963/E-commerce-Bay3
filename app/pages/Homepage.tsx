@@ -11,6 +11,12 @@ import Notfound from "../components/Notfound";
 const Homepage = () => {
   const { products: data, isLoading, isError } = useProducts();
   const t = useTranslations();
+  const displayDescription = (text: string = "", limit: number) => {
+    if (text.length > limit) {
+      return text.slice(0, limit) + "...";
+    }
+    return text;
+  };
   type Product = {
     id: string;
     title: string;
@@ -57,7 +63,7 @@ const Homepage = () => {
                     {product.price} {t("homepage.price")}
                   </p>
                   <h2>{product.title}</h2>
-                  <p className="">{product.description}</p>
+                  <p>{displayDescription(product.description, 70)}</p>
                 </Link>
               </div>
             ))

@@ -65,5 +65,21 @@
       "location": "Location",
       "phone": "Phone Number",
       "submit": "Post Ad"
+    },
+    "product": {
+      "showphone": "Show Phone number",
+      "days": "Days ago",
+      "week": "Weeks ago",
+      "hours": "Hours ago",
+      "minutes": "Minutes ago",
+      "price": "EGP"
+    },
+    "MemberSafety":{
+      "title": "Your safety matters to us.",
+      "safety": "Meet the seller in a public place like a mall, subway, or gas station.",
+      "safety2": "Take someone with you when you go to meet the seller or buyer.",
+      "safety3": "Inform someone from your family or friends about the buyer.",
+      "safety4": "Inspect the product carefully and ensure the price is fair.",
+      "safety5": "Don’t pay or transfer money before checking the product."
     }
 }

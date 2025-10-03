@@ -2,7 +2,6 @@ import React, { useEffect } from 'react'
 import { IoIosArrowDown } from 'react-icons/io'
 import AuthDrop from './AuthDrop';
 import { useAuthStore } from '@/app/store/useAuthStore'
-import Homepage from '@/app/pages/Homepage';
 
 const AuthNav = () => {
     const [isOpen, setIsOpen] = React.useState(false);

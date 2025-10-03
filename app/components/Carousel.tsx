@@ -13,12 +13,11 @@ type CarouselProps = {
 
 export default function Carousel({ images }: CarouselProps) {
     const [current, setCurrent] = useState(0);
-
     const next = () => setCurrent((prev) => (prev + 1) % images.length);
     const prev = () => setCurrent((prev) => (prev - 1 + images.length) % images.length);
 
     return (
-        <div className="relative w-full max-w-lg mx-auto">
+        <div className="relative w-full mx-auto border border-gray-300 !p-4 rounded-lg">
             <div className="h-96 overflow-hidden rounded-lg relative">
                 {images.map((image, index) => (
                     <Image
@@ -31,18 +30,19 @@ export default function Carousel({ images }: CarouselProps) {
                     />
                 ))}
             </div>
-            <button
+            {images.length > 1 && <button
                 onClick={prev}
                 className="absolute top-1/2 left-2 transform -translate-y-1/2 bg-white !px-2 !py-1 rounded-full cursor-pointer"
             >
                 <IoIosArrowBack />
-            </button>
-            <button
+            </button>}
+            {images.length > 1 && <button
                 onClick={next}
                 className="absolute top-1/2 right-2 transform -translate-y-1/2 bg-white !px-2 !py-1 rounded-full cursor-pointer"
             >
                 <IoIosArrowForward />
-            </button>
+            </button>}
+
         </div>
     );
 }

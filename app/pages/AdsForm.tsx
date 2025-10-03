@@ -31,8 +31,8 @@ const AdsForm = () => {
 
   const onSubmit = async (data: AdFormData) => {
     try {
-      const uploadedImages = await uploadImages(imageFiles); // يرجع [{id: 1}, {id: 2}, ...]
-      const imageIds = uploadedImages.map((img: any) => img.id); // [1, 2, ...]
+      const uploadedImages = await uploadImages(imageFiles);
+      const imageIds = uploadedImages.map((img: any) => img.ids);
 
       const newAd = {
         ...data,
@@ -122,10 +122,10 @@ const AdsForm = () => {
               {...register("category", { required: t("adsform.catrequired") })}
             >
               <option>{t("adsform.category1")}</option>
-              <option value="phone">{t("adsform.category2")}</option>
-              <option value="tablet">{t("adsform.category3")}</option>
-              <option value="laptop">{t("adsform.category4")}</option>
-              <option value="accessories">{t("adsform.category5")}</option>
+              <option value="Phone">{t("adsform.category2")}</option>
+              <option value="Tablet">{t("adsform.category3")}</option>
+              <option value="Laptop">{t("adsform.category4")}</option>
+              <option value="Accessories">{t("adsform.category5")}</option>
             </select>
 
             {/* Upload Image */}
