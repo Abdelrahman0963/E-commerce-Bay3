@@ -47,12 +47,6 @@ const AuthDrop = () => {
             </nav>
             <nav className="flex flex-col items-start justify-end gap-4 w-full border-t-2 border-gray-300 !pt-6">
                 {UserRank === "admin" && (<Link href="/dashboard" className="text-black flex items-center gap-1 hover:text-[var(--primary-color)]">Dashboard</Link>)}
-                <Link
-                    href="/yourads"
-                    className="text-black hover:text-[var(--primary-color)]"
-                >
-                    Your Ads
-                </Link>
                 <button
                     onClick={handelLogout}
                     className="text-black cursor-pointer hover:text-[var(--primary-color)]"
