@@ -57,7 +57,7 @@ const Login = () => {
   };
 
   return (
-    <section className="container w-full h-full flex items-center justify-center gap-12 md:justify-between  !mx-auto !py-26 md:!py-30 md:!px-0 !px-10">
+    <section className="container w-full h-full flex items-center justify-center gap-12 md:justify-between  !mx-auto !py-26 md:!py-36 md:!px-18 !px-10">
       <div className="login-logo lg:block hidden relative">
         <HiArrowTrendingDown size={50} className="absolute top-[2rem] right-[8rem] z-10" />
         <h3 className="text-2xl font-bold !mb-4">{t("login.welcome")}</h3>
