@@ -1,10 +1,10 @@
 'use client';
 import React from "react";
-import CarouselDashboard from "../components/CarouselDashboard";
+import CarouselDashboard from "./CarouselDashboard";
 import { useNewAdsBySlug, usePutNewAds } from "../hooks/UseNewAds";
 import { usePostProduct } from "../hooks/UseProducts";
-import { ProductSkeleton } from "../components/Loading";
-import Notfound from "../components/Notfound";
+import { ProductSkeleton } from "./Loading";
+import Notfound from "./Notfound";
 
 export default function DashSlug({ slug }: { slug: string; }) {
     const { product, isLoading, isError } = useNewAdsBySlug(slug);

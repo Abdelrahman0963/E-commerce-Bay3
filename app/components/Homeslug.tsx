@@ -1,9 +1,9 @@
 "use client";
 import React from "react";
 import { useProductBySlug } from "../hooks/UseProducts";
-import Carousel from "../components/Carousel";
-import Notfound from "../components/Notfound";
-import { ProductSkeleton } from "../components/Loading";
+import Carousel from "./Carousel";
+import Notfound from "./Notfound";
+import { ProductSkeleton } from "./Loading";
 import { BiSolidDownArrow } from "react-icons/bi";
 import { IoCopy } from "react-icons/io5";
 import toast from "react-hot-toast";
