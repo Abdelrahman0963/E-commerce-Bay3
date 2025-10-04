@@ -7,6 +7,7 @@ import toast from "react-hot-toast";
 import { usePostNewAds } from "@/app/hooks/UseNewAds";
 import { useAuthStore } from "../store/useAuthStore";
 import { uploadImages } from "@/app/services/NewAds";
+import LoadingButtons from "../components/LoadingButtons";
 
 type AdFormData = {
   title: string;
@@ -26,9 +27,12 @@ const AdsForm = () => {
   const t = useTranslations();
   const [images, setImages] = useState<string[]>([]);
   const [imageFiles, setImageFiles] = useState<File[]>([]);
+  const [loading, setLoading] = useState(false);
 
   const onSubmit = async (data: AdFormData) => {
     try {
+      if (loading) return;
+      setLoading(true);
       let imageIds: number[] = [];
       if (imageFiles.length > 0) {
         imageIds = await uploadImages(imageFiles);
@@ -49,6 +53,8 @@ const AdsForm = () => {
       mutate(newAd);
     } catch (err: any) {
       toast.error(err.message || "❌ حصل خطأ أثناء رفع الصور أو الإعلان.");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -223,10 +229,12 @@ const AdsForm = () => {
           </nav>
 
           <button
+            disabled={loading}
+
             type="submit"
             className="!mt-4 bg-blue-600 text-white !px-4 cursor-pointer !py-2 rounded"
           >
-            {t("adsform.submit")}
+            {loading ? <LoadingButtons /> : t("adsform.submit")}
           </button>
         </form>
       </div>
