@@ -13,7 +13,6 @@ export const useProducts = (slug?: string) => {
   return { products: data, isLoading, isError, error };
 };
 
-// hook لمنتج واحد بالـ slug
 export function useProductBySlug(slug: string) {
   const { data, error, isLoading } = useSWR(
     slug ? `product-${slug}` : null,
