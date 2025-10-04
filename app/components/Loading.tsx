@@ -36,4 +36,18 @@ export const ProductSkeleton: React.FC = () => (
       <div className="h-4 bg-gray-200 w-1/3 rounded"></div>
     </div>
   </section>
-); 
+);
+
+export const CategoriesSkeleton: React.FC = () => {
+  return (
+    <div className="CategoriesList lg:absolute top-16 left-0 w-auto bg-white lg:shadow-lg !p-4 rounded-lg z-50">
+      <ul>
+        {[...Array(5)].map((_, index) => (
+          <li key={index} className="!py-2">
+            <div className="h-4 w-24 bg-gray-200 rounded animate-pulse"></div>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+};

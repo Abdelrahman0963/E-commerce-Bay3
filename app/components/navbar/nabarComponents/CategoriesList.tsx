@@ -2,12 +2,12 @@
 import React from "react";
 import { useProducts } from "@/app/hooks/UseProducts";
 import Link from "next/link";
-import Loading from "../../Loading";
+import { CategoriesSkeleton } from "../../Loading";
 import { useTranslations } from "next-intl";
 const CategoriesList = () => {
   const { products: data, isLoading } = useProducts();
   const t = useTranslations();
-  if (isLoading) return <Loading />;
+  if (isLoading) return <CategoriesSkeleton />;
 
   type Product = {
     category: string | null;
