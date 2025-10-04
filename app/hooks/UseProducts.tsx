@@ -1,9 +1,9 @@
-"use client";
-
+'use client';
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { fetchProducts, postProducts } from "../services/ProductsApi";
 import useSWR from "swr";
 import toast from "react-hot-toast";
+
 export const useProducts = (slug?: string) => {
   const { data, isLoading, isError, error } = useQuery({
     queryKey: ["products", slug],
@@ -13,6 +13,7 @@ export const useProducts = (slug?: string) => {
   return { products: data, isLoading, isError, error };
 };
 
+// hook لمنتج واحد بالـ slug
 export function useProductBySlug(slug: string) {
   const { data, error, isLoading } = useSWR(
     slug ? `product-${slug}` : null,
@@ -40,15 +41,16 @@ export function useCategoriesSlug(category?: string) {
   };
 }
 
+// hook لإضافة منتج
 export function usePostProduct() {
   return useMutation({
     mutationFn: (newProduct: any) => postProducts(newProduct),
     onSuccess: () => {
-      toast.success("🎉 تم عرض المنتج في بـايع بنجاح");
+      toast.success("🎉 تم عرض المنتج بنجاح");
     },
     onError: (error: any) => {
-      toast.error(error.message || "❌ فشل الارسال. تأكد من البيانات وحاول مرة أخرى.");
-      console.log("errrrrrror:", error);
+      toast.error(error.message || "❌ فشل الإرسال. تأكد من البيانات وحاول مرة أخرى.");
+      console.log("Error details:", error);
     },
-  })
+  });
 }
