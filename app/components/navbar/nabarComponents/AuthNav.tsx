@@ -39,7 +39,6 @@ const AuthNav = () => {
                 <strong className='rounded-full w-10 h-10 flex items-center justify-center bg-[var(--user-color)] text-[var(--primary-color)] border-2 border-gray-500 text-[1.3rem]'>
                     {initials}
                 </strong>
-                <span className="text-black">{username || "Guest"}</span>
                 <IoIosArrowDown />
             </nav>
 
