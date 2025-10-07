@@ -10,6 +10,7 @@ import Link from "next/link";
 import { useAuthStore } from "@/app/store/useAuthStore";
 import AuthNav from "./AuthNav";
 import SearchNav from "./SearchNav";
+import WishList from "./WishList";
 
 
 const NavbarCom = () => {
@@ -73,6 +74,7 @@ const NavbarCom = () => {
             </span>
           </button>
           <Categories />
+          <WishList />
           {!isLoggedIn ? (
             <Link className="border-b-2 !px-3  hover:text-[var(--primary-color)]" href={"/login"}>
               <span>{t("navbar.login")}</span>
@@ -80,6 +82,7 @@ const NavbarCom = () => {
           ) : (
             <AuthNav />
           )}
+
           <PostAd />
         </div>
       ) : null}

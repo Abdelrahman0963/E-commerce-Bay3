@@ -8,6 +8,7 @@ import { usePostNewAds } from "@/app/hooks/UseNewAds";
 import { useAuthStore } from "../store/useAuthStore";
 import { uploadImages } from "@/app/services/NewAds";
 import LoadingButtons from "../components/LoadingButtons";
+import { error } from "console";
 
 type AdFormData = {
   title: string;
@@ -21,7 +22,7 @@ type AdFormData = {
 };
 
 const AdsForm = () => {
-  const { register, handleSubmit } = useForm<AdFormData>();
+  const { register, handleSubmit, formState: { errors } } = useForm<AdFormData>();
   const { mutate } = usePostNewAds();
   const userId = useAuthStore((s) => s.id);
   const t = useTranslations();
@@ -105,6 +106,7 @@ const AdsForm = () => {
                 })}
                 className="text-black !p-2 rounded-md border border-gray-300 w-full"
               />
+              {errors.title && <span className="text-red-500">{errors.title.message}</span>}
             </nav>
 
             <nav className="flex flex-col gap-2 w-full">
@@ -125,6 +127,7 @@ const AdsForm = () => {
                 })}
                 className="text-black !p-2 rounded-md border border-gray-300"
               />
+              {errors.description && <span className="text-red-500">{errors.description.message}</span>}
             </nav>
           </nav>
 
@@ -140,6 +143,7 @@ const AdsForm = () => {
               <option value="Tablet">{t("adsform.category3")}</option>
               <option value="Laptop">{t("adsform.category4")}</option>
               <option value="Accessories">{t("adsform.category5")}</option>
+              {errors.category && <span className="text-red-500">{errors.category.message}</span>}
             </select>
 
             {/* Upload Image */}
@@ -204,6 +208,7 @@ const AdsForm = () => {
                 })}
                 className="text-black !p-2 rounded-md border border-gray-300 w-full"
               />
+              {errors.price && <span className="text-red-500">{errors.price.message}</span>}
             </nav>
 
             <nav className="flex flex-col gap-2 w-full">
@@ -215,6 +220,7 @@ const AdsForm = () => {
                 className="text-black !p-2 rounded-md border border-gray-300 w-full"
               />
             </nav>
+            {errors.location && <span className="text-red-500">{errors.location.message}</span>}
           </div>
 
           {/* Phone */}
@@ -226,8 +232,8 @@ const AdsForm = () => {
               {...register("phone", { required: t("adsform.required") })}
               className="text-black !p-2 rounded-md border border-gray-300 w-full"
             />
+            {errors.phone && <span className="text-red-500">{errors.phone.message}</span>}
           </nav>
-
           <button
             disabled={loading}
 

@@ -8,7 +8,7 @@ import useSWR from "swr";
 export const usePostNewAds = () => {
     const router = useRouter();
     return useMutation({
-        mutationFn: (newAd: any) => postNewAds(newAd),
+        mutationFn: (newAd: any) => postNewAds(newAd, []),
         onSuccess: () => {
             toast.success("🎉 تم إنشاء الاعلان بنجاح");
             router.push('/');

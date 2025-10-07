@@ -1,15 +1,17 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import { useProducts } from "@/app/hooks/UseProducts";
 import Image from "next/image";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
 import { GiCutDiamond } from "react-icons/gi";
+import { MdAddShoppingCart } from "react-icons/md";
 import SkeletonLoader from "../components/Loading";
 import Notfound from "../components/Notfound";
 
 const Homepage = () => {
   const { products: data, isLoading, isError } = useProducts();
+  const [activeProductId, setActiveProductId] = React.useState<string[]>([]);
   const t = useTranslations();
   const displayDescription = (text: string = "", limit: number) => {
     if (text.length > limit) {
@@ -28,6 +30,19 @@ const Homepage = () => {
     images?: { url: string }[];
     slug: string;
   }
+  useEffect(() => {
+    const stored = localStorage.getItem("activeProductId");
+    if (stored) {
+      setActiveProductId(JSON.parse(stored));
+    }
+  }, []);
+
+  useEffect(() => {
+    if (activeProductId && activeProductId.length > 0) {
+      localStorage.setItem("activeProductId", JSON.stringify(activeProductId));
+    }
+  }, [activeProductId]);
+
   if (isLoading) return <SkeletonLoader />
     ;
   if (isError || !data) return <Notfound />;
@@ -43,8 +58,8 @@ const Homepage = () => {
                 className="border border-gray-300 !p-4 rounded-md"
                 key={product.id}
               >
-                <Link href={`/product/${product.slug}`}>
-                  <div className="w-full h-48 flex items-center justify-center overflow-hidden relative !mb-2">
+                <div className="w-full h-48 flex items-center justify-center overflow-hidden relative !mb-2">
+                  <Link href={`/product/${product.slug}`}>
                     <Image
                       src={
                         product.images?.[0]?.url
@@ -55,16 +70,21 @@ const Homepage = () => {
                       width={200}
                       height={200}
                       loading="lazy"
-                      className="object-contain w-full h-full"
+                      className="object-cover"
                     />
-                    <GiCutDiamond className="absolute text-3xl top-2 left-2 text-[var(--primary-color)]" />
-                  </div>
+                  </Link>
+                  <GiCutDiamond className="absolute text-3xl top-2 left-2 text-[var(--primary-color)]" />
+                </div>
+                <div className="flex items-center justify-between">
                   <p className="text-[var(--primary-color)] font-semibold  !mb-2">
                     {product.price} {t("homepage.price")}
                   </p>
-                  <h2>{product.title}</h2>
-                  <p>{displayDescription(product.description, 70)}</p>
-                </Link>
+                  <nav onClick={() => setActiveProductId(activeProductId.includes(product.id) ? activeProductId.filter((id) => id !== product.id) : [...activeProductId, product.id])} aria-label="Add to cart" className={`flex items-center justify-center rounded-md  text-white cursor-pointer hover:bg-[var(--primary-color)] !p-2 !ml-3.5 ${activeProductId.includes(product.id) ? "bg-[var(--primary-color)]" : "bg-black"}`}>
+                    <MdAddShoppingCart className="text-[1.2rem]" />
+                  </nav>
+                </div>
+                <h2>{product.title}</h2>
+                <p>{displayDescription(product.description, 70)}</p>
               </div>
             ))
           )}
